@@ -1,2 +1,2 @@
-django_proj/settings.py
-venv
+/server/node_modules/
+/client/node_modules/

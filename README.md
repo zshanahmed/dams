@@ -3,3 +3,5 @@ A request-response based SAAS system that would help recipients to efficiently o
 
 See [wiki](https://github.com/zshanahmed/dams/wiki/Development-Environment---Setup) to set up development environment
 
+Webpage side runs on http://localhost:3000
+Server runs on http://localhost:5000

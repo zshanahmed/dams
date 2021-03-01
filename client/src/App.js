@@ -8,6 +8,13 @@ import Posts from './components/Posts/Posts';
 const App = () => {
   const [donorName, setDonorName] = useState('');
   const [resource, setResource] = useState('');
+  const [resourceList, setResourceList] = useState([])
+
+  useEffect(() => {
+    Axios.get("http://localhost:5000/api/get").then((response) => {
+      setResourceList(response.data)
+    })
+  }, [])
 
   const submitReview = () => {
     Axios.post("http://localhost:5000/api/insert", 
@@ -38,6 +45,10 @@ const App = () => {
           setResource(e.target.value)
         }} />
         <button onClick={submitReview} >Submit</button>
+
+        {resourceList.map((val) => {
+          return <h1>Donor: {val.donorName} | Resource: {val.resource}</h1>
+        })}
       </div>
     </div>
     

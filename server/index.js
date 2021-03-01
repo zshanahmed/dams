@@ -25,6 +25,15 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.get('/api/get', (req, res) => {
+    const donorName = req.body.donorName;
+    const resource = req.body.resource;
+    const sqlSelect = "SELECT * from resources;"
+    connection.query(sqlSelect, (err, result) => {
+        res.send(result);
+    })
+})
+
 app.post('/api/insert', (req, res) => {
     const donorName = req.body.donorName;
     const resource = req.body.resource;

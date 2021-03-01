@@ -26,10 +26,10 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/api/insert', (req, res) => {
-    const movieName = req.body.movieName;
-    const movieReview = req.body.movieReview;
-    const sqlInsert = "INSERT into movie_reviews (movieName, movieReview) VALUES (?,?)"
-    connection.query(sqlInsert, [movieName, movieReview], (err, result) => {
+    const donorName = req.body.donorName;
+    const resource = req.body.resource;
+    const sqlInsert = "INSERT into resources (donorName, resource) VALUES (?,?)"
+    connection.query(sqlInsert, [donorName, resource], (err, result) => {
         console.log(err);
     })
 })

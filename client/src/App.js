@@ -6,14 +6,14 @@ import Axios from 'axios';
 import Posts from './components/Posts/Posts';
 
 const App = () => {
-  const [movieName, setMovieName] = useState('');
-  const [movieReview, setReview] = useState('');
+  const [donorName, setDonorName] = useState('');
+  const [resource, setResource] = useState('');
 
   const submitReview = () => {
     Axios.post("http://localhost:5000/api/insert", 
     {
-      movieName: movieName, 
-      movieReview: movieReview
+      donorName: donorName, 
+      resource: resource
     }).then(() => {
       alert('Sucessfully added');
     });
@@ -26,16 +26,16 @@ const App = () => {
     //   </AppBar>
     // </Container>
     <div className="App">
-      <h1>CRUD Application</h1>
+      <h1>Disaster Assistance Management System</h1>
 
       <div className="form">
-        <label>Movie Name</label>
-        <input type="text" name="movieName" onChange={(e) => {
-          setMovieName(e.target.value)
+        <label>Donor</label>
+        <input type="text" name="donorName" onChange={(e) => {
+          setDonorName(e.target.value)
         }} />
-        <label>Review</label>
+        <label>Resource</label>
         <input type="text" name = "review" onChange={(e) => {
-          setReview(e.target.value)
+          setResource(e.target.value)
         }} />
         <button onClick={submitReview} >Submit</button>
       </div>

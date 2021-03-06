@@ -33,7 +33,7 @@ const App = () => {
     //   </AppBar>
     // </Container>
     <div className="App">
-      <h1>Disaster Assistance Management System</h1>
+      <h1>Disaster Assistance Management System - Team 2</h1>
 
       <div className="form">
         <label>Donor</label>

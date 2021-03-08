@@ -1,25 +1,29 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
+import mysql from 'mysql';
 import cors from 'cors';
 
-import postRoutes from './routes/posts.js';
+import resourceRouter from '../server/routes/resources.js';
 
 const app = express();
 
-app.use('/posts', postRoutes);
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'password',
+    database: 'DAMS'
+});
 
-app.use(bodyParser.json({message: "hello"}));
-app.use(bodyParser.urlencoded({message: "hello"}));
+connection.connect();
+
 app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-const CONNECTION_URL = 'ENTER DB INFO';
+app.use('/api', resourceRouter);
+
 const PORT = process.env.port || 5000;
-
-//mongoose.connect(CONNECTION_URL, { useUrlParser: true, useUnifiedTopology: true })
-//  .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-//  .catch((error) => console.log(error.message));
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 
-//mongoose.set('useFindAndModify', false);
+export default connection;

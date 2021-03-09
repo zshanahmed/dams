@@ -4,6 +4,7 @@ import mysql from 'mysql';
 import cors from 'cors';
 
 import resourceRouter from '../server/routes/resources.js';
+import disasterRouter from '../server/routes/disasters.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/api', resourceRouter);
+app.use('/disaster', disasterRouter);
 
 const PORT = process.env.port || 5000;
 

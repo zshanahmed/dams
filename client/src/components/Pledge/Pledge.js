@@ -20,6 +20,7 @@ const Pledge = () => {
         resource: resource
       }).then(() => {
         alert('Sucessfully added');
+        window.location.reload();
       });
     };
   

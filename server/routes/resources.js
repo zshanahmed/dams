@@ -4,8 +4,8 @@ import { getResource, insertResource } from '../controllers/resources.js';
 
 const resourceRouter = express.Router();
 
-resourceRouter.get('/get', getResource);
+resourceRouter.get('/', getResource);
 
-resourceRouter.post('/insert',  insertResource);
+resourceRouter.post('/',  insertResource);
 
 export default resourceRouter;

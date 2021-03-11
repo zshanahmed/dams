@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use('/api', resourceRouter);
+app.use('/pledge', resourceRouter);
 app.use('/disaster', disasterRouter);
 
 const PORT = process.env.port || 5000;

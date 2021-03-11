@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Pledge from './components/Pledge/Pledge';
+import App from './App';
 
-ReactDOM.render(<Pledge />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));

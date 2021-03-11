@@ -3,12 +3,10 @@ import Axios from 'axios';
 import './Pledge.css';
 
 const Pledge = () => {
-    const [donorName, setDonorName] = useState('');
-    const [resource, setResource] = useState('');
-    const [resourceList, setResourceList] = useState([])
+    const [resourceList, setResourceList] = useState([]);
   
     useEffect(() => {
-      Axios.get("http://localhost:5000/pledge/").then((response) => {
+      Axios.get("http://localhost:5000/pledge/all").then((response) => {
         setResourceList(response.data)
       })
     }, [])

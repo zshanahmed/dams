@@ -1,10 +1,16 @@
 import connection from '../index.js';
 
-export const getResource = (req, res) => {
-  // const donorName = req.body.donorName;
-  // const resource = req.body.resource;
+export const getAllResources = (req, res) => {
   const sqlSelect = "SELECT * from resources;"
   connection.query(sqlSelect, (err, result) => {
+      res.send(result);
+  })
+}
+
+export const getResource = (req, res) => {
+  const resourceId = req.query.id;
+  const sqlSelect = "SELECT * from resources WHERE id=?;"
+  connection.query(sqlSelect, [resourceId], (err, result) => {
       res.send(result);
   })
 }

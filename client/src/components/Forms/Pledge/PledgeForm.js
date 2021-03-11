@@ -5,17 +5,18 @@ import './PledgeForm.css';
 const PledgeForm = () => {
     const [donorName, setDonorName] = useState('');
     const [resource, setResource] = useState('');
-    const [resourceList, setResourceList] = useState([])
   
     const submitReview = () => {
-      Axios.post("http://localhost:5000/pledge/", 
-      {
-        donorName: donorName, 
-        resource: resource
-      }).then(() => {
-        alert('Sucessfully added');
-        window.location.reload();
-      });
+        if (donorName && resource){
+            Axios.post("http://localhost:5000/pledge/", 
+            {
+                donorName: donorName, 
+                resource: resource
+            }).then(() => {
+                alert('Sucessfully added');
+                window.location.reload();
+            });
+        }
     };
   
     return (

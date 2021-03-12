@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Axios from 'axios';
 import './PledgeForm.css';
 
-const PledgeForm = () => {
+function PledgeForm() {
     const [donorName, setDonorName] = useState('');
     const [resource, setResource] = useState('');
   

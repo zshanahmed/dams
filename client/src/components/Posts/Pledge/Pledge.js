@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
+
 import './Pledge.css';
 
-const Pledge = () => {
+function Pledge() {
     const [resourceList, setResourceList] = useState([]);
   
     useEffect(() => {

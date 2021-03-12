@@ -1,22 +1,15 @@
 import React from 'react';
-import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
+import { Route } from 'react-router-dom';
 
-import Pledge from './components/Posts/Pledge/Pledge';
-import PledgeForm from './components/Forms/Pledge/PledgeForm';
+import Home from './webpages/Home';
+import Disaster from './components/Posts/Disaster/Disaster';
 
-const App = () => {
+function App() {
   return (
-    <Container maxwidth="lg">
-      <AppBar position="static" color="inherit">
-        <Typography variant="h2" align="center">Disaster Assistance Managment System</Typography>
-      </AppBar>
-      <Grow in>
-        <Container>
-          <PledgeForm />
-          <Pledge />
-        </Container>
-      </Grow>
-    </Container>
+    <div className="App">
+      <Route exact path="/" component={Home} />
+      <Route exact path="/disaster" component={Disaster} />
+    </div>
   );
 }
 

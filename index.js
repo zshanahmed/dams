@@ -5,22 +5,19 @@ import cors from 'cors';
 
 import dotenv from 'dotenv'
 dotenv.config();
-// import { createRequire } from "module";
-// const require = createRequire(import.meta.url);
 
 import postRoutes from './routes/posts.js';
 
 const app = express();
-// const mysql = require('mysql');
 
 var connection = mysql.createConnection({
     host: process.env.dbHost,
     user: process.env.dbUser,
     password: process.env.dbPassword,
     database: process.env.dbName
-});
+}); // Database credentials
 
-connection.connect();
+connection.connect(); // Connection with database
 
 app.use(cors());
 app.use(express.json());

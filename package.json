@@ -6,6 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
+    "server": "node index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "mocha"
   },
   "keywords": [],
@@ -19,5 +22,8 @@
     "mongoose": "^5.11.17",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0"
   }
 }

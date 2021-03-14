@@ -15,7 +15,7 @@ function Pledge() {
     return (
       <div className="Pledge">
         {resourceList.map((val) => {
-            return <h1>Donor: {val.donorName} | Resource: {val.resource}</h1>
+            return <h3>Donor: {val.donorName} | Resource: {val.resource}</h3>
         })}
       </div>
     );

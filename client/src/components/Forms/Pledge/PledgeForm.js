@@ -20,7 +20,7 @@ function PledgeForm() {
     };
   
     return (
-        <div className="Pledge">
+        <div className="PledgeForm">
             <div className="form">
                 <label>Donor</label>
                 <input type="text" name="donorName" onChange={(e) => {

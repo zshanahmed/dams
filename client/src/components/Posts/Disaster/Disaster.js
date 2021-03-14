@@ -1,21 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import './Disaster.css';
 
-function Disaster() {
-
-/*    useEffect(() => {
-      Axios.get("http://localhost:5000/pledge/all").then((response) => {
-        setResourceList(response.data)
-      })
-    }, [])
- */ 
-    return (
-      <div className="Disaster">
-          <h3>This is a disaster item</h3>
-      </div>
-    );
-  }
+function Disasters() {
+  const [disasterList, setDisasterList] = useState([]);
   
-  export default Disaster;
+  useEffect(() => {
+    Axios.get("http://localhost:5000/disaster/all").then((response) => {
+      setDisasterList(response.data)
+    })
+  }, [])
+
+  return (
+    <div className="Disasters">
+      {disasterList.map((val) => {
+        if (val.active) {
+          return <h3>Type: {val.type} | Date: {val.date.slice(0,10)} | Location: {val.location}</h3>
+        }
+      })}
+    </div>
+  );
+}
+  
+export default Disasters;

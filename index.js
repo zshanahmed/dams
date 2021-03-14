@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import mysql from 'mysql';
 import cors from 'cors';
 
+import dotenv from 'dotenv'
+dotenv.config();
 // import { createRequire } from "module";
 // const require = createRequire(import.meta.url);
 
@@ -13,10 +15,10 @@ const app = express();
 // const mysql = require('mysql');
 
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'DAMS'
+    host: process.env.dbHost,
+    user: process.env.dbUser,
+    password: process.env.dbPassword,
+    database: process.env.dbName
 });
 
 connection.connect();

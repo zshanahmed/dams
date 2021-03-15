@@ -1,0 +1,41 @@
+.AuthForm {
+    text-align: center;
+    font-family:-apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.form {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-auth label {
+    font-weight: 600;
+}
+
+.form-auth input {
+    margin: 10px;
+    padding: 0.8em 1.4em;
+    border-radius: 6px;
+}
+
+.btn {
+    border-radius: 4px;
+    padding: 0.6em 1em;
+    color: white;
+    background-color: black;
+    margin-top: 10px;
+    box-shadow: black 2px 2px 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    color: white;
+    background-color: gray;
+    transform: translate(2px, 2px);
+}
+
+.btn:focus {
+    transform: translate(2px, 2px);
+}

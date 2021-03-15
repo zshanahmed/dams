@@ -3,12 +3,33 @@
     background-color: #333;
     overflow: hidden;
     color: rgb(132, 230, 181);
+    font-family:-apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 h1 a {
     text-decoration: none;
 }
 
+h1 a:hover {
+    text-decoration: none;
+}
+
 a {
     color:azure;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    padding-bottom: 5px;
+    border-bottom: violet solid 2px;
+}
+
+ul {
+    list-style: none;
+}   
+
+li {
+    padding-left: 1em;
+    display: inline-block;
 }

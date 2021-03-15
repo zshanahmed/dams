@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Axios from "axios";
 import "./Auth.css";
 
@@ -139,6 +140,12 @@ function RegisterForm() {
         <button className="btn" onClick={regUser}>
           Submit
         </button>
+        <p>
+          Have an account already?
+          <span>
+            <Link to="/">Click here to Login!</Link>
+          </span>
+        </p>
       </div>
     </div>
   );

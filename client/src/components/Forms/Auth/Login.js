@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -6,6 +6,8 @@ function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  Axios.defaults.withCredentials = true;
 
   const loginUser = () => {
     if (username && password) {

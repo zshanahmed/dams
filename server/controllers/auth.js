@@ -1,5 +1,4 @@
 import connection from "../index.js";
-
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 
@@ -13,7 +12,7 @@ export const register = (req, res) => {
   const sec_ans = req.body.sec_ans;
   const mobile_num = req.body.mobile_num;
 
-  bcrypt.hash(password, 10, (err, hash) => {
+  bcrypt.hash(password, saltRounds, (err, hash) => {
     if (err) {
       console.log(err);
     }
@@ -34,24 +33,24 @@ export const register = (req, res) => {
   });
 };
 
-export const login = (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const sqlSelect = "SELECT * from users where username = ?";
-  connection.query(sqlSelect, username, (err, result) => {
-    if (err) {
-      res.send({ err: err });
-    }
-    if (result.length > 0) {
-      bcrypt.compare(password, result[0].password, (err, response) => {
-        if (response) {
-          res.send(result);
-        } else {
-          res.send({ message: "Wrong username/password combination" });
-        }
-      });
-    } else {
-      res.send({ message: "User doesn't exist" });
-    }
-  });
-};
+// export const login = (req, res) => {
+//   const username = req.body.username;
+//   const password = req.body.password;
+//   const sqlSelect = "SELECT * from users where username = ?";
+//   connection.query(sqlSelect, username, (err, result) => {
+//     if (err) {
+//       res.send({ err: err });
+//     }
+//     if (result.length > 0) {
+//       bcrypt.compare(password, result[0].password, (err, response) => {
+//         if (response) {
+//           res.send(result);
+//         } else {
+//           res.send({ message: "Wrong username/password combination" });
+//         }
+//       });
+//     } else {
+//       res.send({ message: "User doesn't exist" });
+//     }
+//   });
+// };

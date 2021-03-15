@@ -2,6 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import mysql from "mysql";
 import cors from "cors";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 
 import resourceRouter from "../server/routes/resources.js";
 import disasterRouter from "../server/routes/disasters.js";

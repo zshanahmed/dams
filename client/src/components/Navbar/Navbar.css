@@ -6,7 +6,7 @@
     font-family:-apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-h1 a {
+a {
     text-decoration: none;
 }
 
@@ -14,12 +14,12 @@ h1 a:hover {
     text-decoration: none;
 }
 
-a {
+.Navbar a {
     color:azure;
     text-decoration: none;
 }
 
-a:hover {
+.Navbar a:hover {
     text-decoration: none;
     padding-bottom: 5px;
     border-bottom: violet solid 2px;

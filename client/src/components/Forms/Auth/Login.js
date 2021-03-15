@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -49,11 +50,18 @@ function LoginForm() {
             }}
           />
         </div>
-
-        <button className="btn" onClick={loginUser}>
-          Login
-        </button>
+        <div className="form-group">
+          <button className="btn" onClick={loginUser}>
+            Login
+          </button>
+        </div>
       </div>
+      <p>
+        Don't have an account?
+        <span>
+          <Link to="/register">Click here to create an account!</Link>
+        </span>
+      </p>
     </div>
   );
 }

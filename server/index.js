@@ -58,7 +58,7 @@ const login = (req, res) => {
       bcrypt.compare(password, result[0].password, (err, response) => {
         if (response) {
           req.session.user = result;
-          console.log(req.session.userL);
+          console.log(req.session.user);
           res.send(result);
         } else {
           res.send({ message: "Wrong username/password combination" });
@@ -70,7 +70,16 @@ const login = (req, res) => {
   });
 };
 
-const loginRouter = express.Router().post("/signin", login);
+const app_router = express.Router();
+const loginRouter = app_router.post("/signin", login);
+
+app.get("/signin", (req, res) => {
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
 
 app.use("/pledge", resourceRouter);
 app.use("/disaster", disasterRouter);

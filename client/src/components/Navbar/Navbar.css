@@ -21,7 +21,7 @@ h1 a:hover {
 
 .Navbar a:hover {
     text-decoration: none;
-    padding-bottom: 5px;
+    padding-bottom: 4px;
     border-bottom: violet solid 2px;
 }
 

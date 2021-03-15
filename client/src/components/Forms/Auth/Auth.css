@@ -30,16 +30,6 @@
     cursor: pointer;
 }
 
-.btn:hover {
-    color: white;
-    background-color: gray;
-    transform: translate(2px, 2px);
-}
-
-.btn:focus {
-    transform: translate(2px, 2px);
-}
-
 .AuthForm span {
     padding-left: 0.3em;
 }

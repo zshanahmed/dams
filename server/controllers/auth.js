@@ -1,5 +1,6 @@
 import connection from "../index.js";
 import bcrypt from "bcrypt";
+
 const saltRounds = 10;
 
 export const register = (req, res) => {

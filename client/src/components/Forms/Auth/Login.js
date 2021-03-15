@@ -15,7 +15,6 @@ function LoginForm() {
         username: username,
         password: password,
       }).then((response) => {
-        console.log(response);
         if (response.data.message) {
           setMessage(response.data.message);
         } else {
@@ -26,6 +25,17 @@ function LoginForm() {
       setMessage("Please type username and password");
     }
   };
+
+  useEffect(() => {
+    Axios.get("http://localhost:5000/signin").then(
+      (response) => {
+        if (response.data.loggedIn == true) {
+          setMessage("You are logged in as " + response.data.user[0].username);
+        }
+      },
+      (err) => console.log(err)
+    );
+  }, []);
 
   return (
     <div className="AuthForm">
@@ -47,6 +57,7 @@ function LoginForm() {
           <input
             type="password"
             name="password"
+            placeholder="*******"
             onChange={(e) => {
               setPassword(e.target.value);
             }}

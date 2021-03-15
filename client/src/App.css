@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    font-family:-apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .form {
@@ -14,4 +15,14 @@
     height: 60px;
     margin: 10px;
     font-size: 25px;
+}
+
+.btn:hover {
+    color: white;
+    background-color: gray;
+    transform: translate(2px, 2px);
+}
+
+.btn:focus {
+    transform: translate(2px, 2px);
 }

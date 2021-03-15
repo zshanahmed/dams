@@ -6,7 +6,9 @@ function Navbar() {
   return (
     <div className="Navbar">
       <h1>
-        <Link to="/">Disaster Assistance Management System</Link>
+        <Link to="/">
+          <span>Disaster Assistance Management System</span>
+        </Link>
       </h1>
       <ul>
         <li>

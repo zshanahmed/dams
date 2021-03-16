@@ -6,6 +6,7 @@ function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [logStatus, setLogStatus] = useState(false);
 
   Axios.defaults.withCredentials = true;
 
@@ -29,7 +30,8 @@ function LoginForm() {
   useEffect(() => {
     Axios.get("http://localhost:5000/signin").then(
       (response) => {
-        if (response.data.loggedIn == true) {
+        if (response.data.loggedIn === true) {
+          setLogStatus(true);
           setMessage("You are logged in as " + response.data.user[0].username);
         }
       },
@@ -78,5 +80,4 @@ function LoginForm() {
     </div>
   );
 }
-
 export default LoginForm;

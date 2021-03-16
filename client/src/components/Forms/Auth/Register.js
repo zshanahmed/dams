@@ -21,7 +21,6 @@ function RegisterForm() {
       if (password !== confirmPassword) {
         setError("Passwords not matching! Please try again");
       } else {
-        console.log(username);
         Axios.post("http://localhost:5000/signup/", {
           username: username,
           password: password,
@@ -31,9 +30,13 @@ function RegisterForm() {
           location: location,
           mobile_num: mobile_num,
           sec_ans: sec_ans,
-        }).then(() => {
-          alert("Sucessfully signed up");
-          window.location.reload();
+        }).then((res) => {
+          if (res.data.errno === 1062) {
+            setError("Username already exists!");
+          } else {
+            alert("Sucessfully signed up");
+            window.location.reload();
+          }
         });
       }
     } else {

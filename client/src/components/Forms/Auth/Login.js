@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { Link } from "react-router-dom";
 
-function LoginForm() {
+const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -74,10 +73,10 @@ function LoginForm() {
       <p>
         Don't have an account?
         <span>
-          <Link to="/register">Click here to create an account!</Link>
+          <a href="/register">Click here to create an account!</a>
         </span>
       </p>
     </div>
   );
-}
-export default LoginForm;
+};
+export { LoginForm };

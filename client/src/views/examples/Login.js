@@ -15,7 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 
 // reactstrap components
 import {
@@ -34,55 +35,51 @@ import {
 } from "reactstrap";
 
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [logStatus, setLogStatus] = useState(false);
+
+  Axios.defaults.withCredentials = true;
+
+  const loginUser = () => {
+    if (username && password) {
+      Axios.post("http://localhost:5000/signin/", {
+        username: username,
+        password: password,
+      }).then((response) => {
+        if (response.data.message) {
+          setMessage(response.data.message);
+        } else {
+          setMessage("You are logged in as " + response.data[0].username);
+        }
+      });
+    } else {
+      setMessage("Please type username and password");
+    }
+  };
+
+  useEffect(() => {
+    Axios.get("http://localhost:5000/signin").then(
+      (response) => {
+        if (response.data.loggedIn === true) {
+          setLogStatus(true);
+          setMessage("You are logged in as " + response.data.user[0].username);
+        }
+      },
+      (err) => console.log(err)
+    );
+  }, []);
+
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign in with</small>
-            </div>
-            <div className="btn-wrapper text-center">
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/github.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Github</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/google.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div>
-          </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <small>Or sign in with credentials</small>
+              <h1>Login</h1>
             </div>
+            <p>Message: {message}</p>
             <Form role="form">
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
@@ -92,9 +89,12 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Email"
-                    type="email"
-                    autoComplete="new-email"
+                    placeholder="Username"
+                    type="text"
+                    name="username"
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
                   />
                 </InputGroup>
               </FormGroup>
@@ -109,6 +109,10 @@ const Login = () => {
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
+                    name="password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                   />
                 </InputGroup>
               </FormGroup>
@@ -126,7 +130,12 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button
+                  className="my-4"
+                  color="primary"
+                  type="button"
+                  onClick={loginUser}
+                >
                   Sign in
                 </Button>
               </div>

@@ -33,12 +33,14 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { useHistory } from "react-router";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [logStatus, setLogStatus] = useState(false);
+  const history = useHistory();
 
   Axios.defaults.withCredentials = true;
 
@@ -51,7 +53,7 @@ const Login = () => {
         if (response.data.message) {
           setMessage(response.data.message);
         } else {
-          setMessage("You are logged in as " + response.data[0].username);
+          history.push("/admin/index");
         }
       });
     } else {
@@ -78,14 +80,14 @@ const Login = () => {
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
               <h1>Login</h1>
+              <p>{message}</p>
             </div>
-            <p>Message: {message}</p>
             <Form role="form">
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-email-83" />
+                      <i className="ni ni-circle-08" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
@@ -155,8 +157,8 @@ const Login = () => {
           <Col className="text-right" xs="6">
             <a
               className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
+              href="/auth/register"
+              // onClick={(e) => e.preventDefault()}
             >
               <small>Create new account</small>
             </a>

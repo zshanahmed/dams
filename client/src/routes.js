@@ -42,6 +42,7 @@ var routes = [
     path: "/maps",
     name: "Maps",
     icon: "ni ni-pin-3 text-orange",
+    invisible: true,
     component: Maps,
     layout: "/admin",
   },

@@ -24,6 +24,10 @@ import {
   Card,
   CardHeader,
   CardBody,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   FormGroup,
   Form,
   Input,
@@ -31,6 +35,7 @@ import {
   InputGroupText,
   InputGroup,
   Row,
+  UncontrolledDropdown,
   Col,
 } from "reactstrap";
 
@@ -42,6 +47,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [mobile_num, setMobileNum] = useState("");
+  const [role, setRole] = useState("Role");
 
   const [error, setError] = useState("");
 
@@ -57,6 +63,7 @@ const Register = () => {
           email: email,
           location: location,
           mobile_num: mobile_num,
+          role: role,
         }).then((res) => {
           if (res.data.errno === 1062) {
             setError("Username already exists!");
@@ -168,6 +175,44 @@ const Register = () => {
                   />
                 </InputGroup>
               </FormGroup>
+              <UncontrolledDropdown className="mb-3">
+                <DropdownToggle
+                  caret
+                  color="default"
+                  id="navbarDropdownMenuLink2"
+                >
+                  {role}
+                </DropdownToggle>
+
+                <DropdownMenu aria-labelledby="navbarDropdownMenuLink2">
+                  <li>
+                    <DropdownItem
+                      value="Admin"
+                      onClick={(e) => setRole(e.target.value)}
+                    >
+                      Admin
+                    </DropdownItem>
+                  </li>
+
+                  <li>
+                    <DropdownItem
+                      value="Donor"
+                      onClick={(e) => setRole(e.target.value)}
+                    >
+                      Donor
+                    </DropdownItem>
+                  </li>
+
+                  <li>
+                    <DropdownItem
+                      value="Recipient"
+                      onClick={(e) => setRole(e.target.value)}
+                    >
+                      Recipient
+                    </DropdownItem>
+                  </li>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">

@@ -10,6 +10,7 @@ export const register = (req, res) => {
   const location = req.body.location;
   const email = req.body.email;
   const mobile_num = req.body.mobile_num;
+  const role = req.body.role;
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
     if (err) {
@@ -17,10 +18,10 @@ export const register = (req, res) => {
     }
 
     const sqlInsert =
-      "INSERT into users (name, username, password, location, email, mobile_num) VALUES (?,?,?,?,?,?)";
+      "INSERT into users (name, username, password, location, email, mobile_num, role) VALUES (?,?,?,?,?,?,?)";
     connection.query(
       sqlInsert,
-      [name, username, hash, location, email, mobile_num],
+      [name, username, hash, location, email, mobile_num, role],
       (err, result) => {
         if (err) {
           console.log(err);

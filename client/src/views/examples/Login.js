@@ -82,7 +82,7 @@ const Login = () => {
               <h1>Login</h1>
               <p>{message}</p>
             </div>
-            <Form role="form">
+            <Form role="form" onSubmit={loginUser}>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">

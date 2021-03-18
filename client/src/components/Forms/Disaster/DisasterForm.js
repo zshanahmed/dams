@@ -37,7 +37,7 @@ function DisasterForm() {
                 <input type="date" name="date" onChange={(e) => {
                     setDate(e.target.value)
                 }} />
-                <button onClick={submitDisaster}>Submit</button>
+                <button type="button" class="btn btn-secondary" onClick={submitDisaster}>Submit</button>
             </div>
         </div>
     );

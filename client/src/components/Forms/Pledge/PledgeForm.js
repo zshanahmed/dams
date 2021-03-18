@@ -30,7 +30,7 @@ function PledgeForm() {
                 <input type="text" name = "review" onChange={(e) => {
                     setResource(e.target.value)
                 }} />
-                <button onClick={submitReview} >Submit</button>
+                <button type="button" class="btn btn-secondary" onClick={submitReview} >Submit</button>
             </div>
         </div>
     );

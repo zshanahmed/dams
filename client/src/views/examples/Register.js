@@ -56,7 +56,7 @@ const Register = () => {
       if (password !== confirmPassword) {
         setError("Passwords not matching! Please try again");
       } else {
-        Axios.post("http://localhost:5000/signup/", {
+        Axios.post("http://localhost:5000/auth/signup/", {
           username: username,
           password: password,
           name: name,

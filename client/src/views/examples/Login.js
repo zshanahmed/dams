@@ -22,7 +22,7 @@ import Axios from "axios";
 import {
   Button,
   Card,
-  CardHeader,
+  //CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -71,7 +71,7 @@ const Login = () => {
       },
       (err) => console.log(err)
     );
-  }, []);
+  }, [logStatus]);
 
   return (
     <>

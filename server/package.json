@@ -5,17 +5,22 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "mocha"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+<<<<<<< HEAD
     "mocha": "^8.3.0",
+=======
+    "express-session": "^1.17.1",
+>>>>>>> frontend-zeeshan
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7"
   }

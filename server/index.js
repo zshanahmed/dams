@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import express from 'express';
 import bodyParser from 'body-parser';
 import mysql from 'mysql';
 import cors from 'cors';
-=======
-import express from "express";
-import bodyParser from "body-parser";
-import mysql from "mysql";
-import cors from "cors";
->>>>>>> frontend-zeeshan
 
 import resourceRouter from "../server/routes/resources.js";
 import disasterRouter from "../server/routes/disasters.js";
@@ -37,32 +30,7 @@ app.use(
   })
 );
 app.use(express.json());
-<<<<<<< HEAD
-app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/api/get', (req, res) => {
-    const donorName = req.body.donorName;
-    const resource = req.body.resource;
-    const sqlSelect = "SELECT * from resources;"
-    connection.query(sqlSelect, (err, result) => {
-        res.send(result);
-    })
-})
-
-app.post('/api/insert', (req, res) => {
-    const donorName = req.body.donorName;
-    const resource = req.body.resource;
-    const sqlInsert = "INSERT into resources (donorName, resource) VALUES (?,?)"
-    connection.query(sqlInsert, [donorName, resource], (err, result) => {
-        if (err) { console.log(err); }
-    })
-})
-
-const CONNECTION_URL = 'ENTER DB INFO';
-const PORT = process.env.port || 5000;
-
-app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
-=======
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
@@ -87,4 +55,3 @@ const PORT = process.env.port || 5000;
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 
 export default connection;
->>>>>>> frontend-zeeshan

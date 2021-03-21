@@ -17,6 +17,7 @@
 */
 import React from "react";
 import { Link } from "react-router-dom";
+import Logout from "../Logout";
 // reactstrap components
 import {
   DropdownMenu,
@@ -99,9 +100,9 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem>
                   <i className="ni ni-user-run" />
-                  <span>Logout</span>
+                  <Logout />
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

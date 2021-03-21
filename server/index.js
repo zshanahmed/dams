@@ -12,6 +12,7 @@ import { registerRouter } from "../server/routes/auth.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 
+import jwt from "jsonwebtoken";
 const app = express();
 
 var connection = mysql.createConnection({
@@ -22,6 +23,23 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
+
+const verfiyJWT = (req, res, next) => {
+  const token = req.headers("x-access-token");
+
+  if (!token) {
+    res.send("You are not authenticated! Please log in with your credentials");
+  } else {
+    jwt.verify(token, "jwtSecret", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "You failed to authenticate!" });
+      } else {
+        req.userId = decoded.id;
+        next();
+      }
+    });
+  }
+};
 
 app.use(
   cors({
@@ -58,14 +76,22 @@ const login = (req, res) => {
       bcrypt.compare(password, result[0].password, (err, response) => {
         if (response) {
           req.session.user = result;
+          const id = result[0].id;
+          const token = jwt.sign({ id }, "jwtSecret", {
+            expiresIn: 300,
+          });
+          req.session.user = result;
           console.log(req.session.user);
-          res.send(result);
+          res.json({ auth: true, token: token, result: result });
         } else {
-          res.send({ message: "Wrong username/password combination" });
+          res.json({
+            auth: false,
+            message: "Wrong username/password combination",
+          });
         }
       });
     } else {
-      res.send({ message: "User doesn't exist" });
+      res.json({ auth: false, message: "No user exists!" });
     }
   });
 };
@@ -81,8 +107,8 @@ app.get("/signin", (req, res) => {
   }
 });
 
-app.use("/pledge", resourceRouter);
-app.use("/disaster", disasterRouter);
+app.use("/pledge", verfiyJWT, resourceRouter);
+app.use("/disaster", verfiyJWT, disasterRouter);
 app.use("/signup", registerRouter);
 app.use("/", loginRouter);
 

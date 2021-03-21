@@ -50,10 +50,12 @@ const Login = () => {
         username: username,
         password: password,
       }).then((response) => {
-        if (response.data.message) {
-          setMessage(response.data.message);
+        if (!response.data.auth) {
+          setLogStatus(false);
         } else {
           history.push("/admin/index");
+          localStorage.setItem("token", response.data.token);
+          setLogStatus(true);
         }
       });
     } else {
@@ -64,7 +66,7 @@ const Login = () => {
   useEffect(() => {
     Axios.get("http://localhost:5000/signin").then(
       (response) => {
-        if (response.data.loggedIn === true) {
+        if (localStorage.getItem("token")) {
           setLogStatus(true);
           setMessage("You are logged in as " + response.data.user[0].username);
         }

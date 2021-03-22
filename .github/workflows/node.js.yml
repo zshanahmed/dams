@@ -14,7 +14,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-    	working-directory: client
+      working-directory: client
 
     strategy:
       matrix:
@@ -38,7 +38,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-	working-directory: server
+      working-directory: server
 
     strategy:
       matrix:

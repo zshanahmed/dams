@@ -9,14 +9,12 @@ on:
   pull_request:
     branches: [ master ]
 
-defaults:
-  run:
-    working-directory: client
-
 jobs:
-  build:
+  client:
 
     runs-on: ubuntu-latest
+    env:
+      working-directory: client
 
     strategy:
       matrix:
@@ -30,5 +28,32 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
+      working-directory: ${{env.working-directory}}
     - run: npm run build --if-present
+      working-directory: ${{env.working-directory}}
     - run: npm test
+      working-directory: ${{env.working-directory}}
+
+  server:
+
+    runs-on: ubuntu-latest
+    env:
+      working-directory: server
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+      working-directory: ${{env.working-directory}}
+    - run: npm run build --if-present
+      working-directory: ${{env.working-directory}}
+    - run: npm test
+      working-directory: ${{env.working-directory}}

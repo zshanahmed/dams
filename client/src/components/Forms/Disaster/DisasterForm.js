@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import './DisasterForm.css';
+import {Col, FormGroup, Input, Row} from "reactstrap";
 
 function DisasterForm() {
     const [date, setDate] = useState('');
@@ -10,7 +10,7 @@ function DisasterForm() {
     const submitDisaster = () => {
         if (date && location && type){
             console.log(date);
-            Axios.post("http://localhost:5000/disaster/", 
+            Axios.post("http://localhost:5000/admin/disaster/",
             {
                 date: date, 
                 location: location,
@@ -24,21 +24,84 @@ function DisasterForm() {
   
     return (
         <div className="DisasterForm">
-            <div className="form">
-                <label>Disaster</label>
-                <input type="text" name="type" onChange={(e) => {
-                    setType(e.target.value)
-                }} />
-                <label>Location</label>
-                <input type="text" name="location" onChange={(e) => {
-                    setLocation(e.target.value)
-                }} />
-                <label>Date</label>
-                <input type="date" name="date" onChange={(e) => {
-                    setDate(e.target.value)
-                }} />
-                <button onClick={submitDisaster}>Submit</button>
+            <div className="pl-lg-4">
+                <Row>
+                    <Col md="8">
+                        <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-disaster"
+                            ><i className="ni ni-atom pr-2" />
+                                Disaster
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="input-disaster"
+                                placeholder="Please type disaster name"
+                                name="type"
+                                type="text"
+                                onChange={(e) => {
+                                    setType(e.target.value)
+                                }}
+                            />
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md="8">
+                        <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-location"
+                            ><i className="ni ni-square-pin pr-2" />
+                                 Location
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="input-location"
+                                placeholder="Where did it happen?"
+                                name="location"
+                                type="text"
+                                onChange={(e) => {
+                                    setLocation(e.target.value)
+                                }}
+                            />
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md="8">
+                        <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-date"
+                            ><i className="ni ni-calendar-grid-58 pr-2" />
+                                Date
+                            </label>
+                            <Input
+                                className="form-control datepicker"
+                                id="input-date"
+                                placeholder="When did it happen?"
+                                name="date"
+                                type="date"
+                                onChange={(e) => {
+                                    setDate(e.target.value)
+                                }}
+                            />
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md="8">
+                        <div className="text-center">
+                            <FormGroup>
+                                <button className="btn btn-primary" onClick={submitDisaster}>Submit</button>
+                            </FormGroup>
+                        </div>
+                    </Col>
+                </Row>
             </div>
+
         </div>
     );
   }

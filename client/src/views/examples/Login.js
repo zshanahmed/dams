@@ -67,9 +67,7 @@ const Login = () => {
     Axios.get("http://localhost:5000/signin").then(
       (response) => {
         if (localStorage.getItem("token")) {
-          setLogStatus(true);
-          setMessage("You are logged in as " + response.data.user[0].username);
-        }
+          setLogStatus(true);}
       },
       (err) => console.log(err)
     );

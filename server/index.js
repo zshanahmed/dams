@@ -107,8 +107,8 @@ app.get("/signin", (req, res) => {
   }
 });
 
-app.use("/pledge", verfiyJWT, resourceRouter);
-app.use("/disaster", verfiyJWT, disasterRouter);
+app.use("/admin/pledge", resourceRouter);
+app.use("/admin/disaster", disasterRouter);
 app.use("/signup", registerRouter);
 app.use("/", loginRouter);
 

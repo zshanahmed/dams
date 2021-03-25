@@ -15,16 +15,16 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useState, useEffect } from "react";
+import React, { useState /*, useEffect*/ } from "react";
 import Axios from "axios";
 
 // reactstrap components
 import {
   Button,
   Card,
-  CardHeader,
+  //CardHeader,
   CardBody,
-  Dropdown,
+  //Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -34,7 +34,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
+  //Row,
   UncontrolledDropdown,
   Col,
 } from "reactstrap";
@@ -56,7 +56,7 @@ const Register = () => {
       if (password !== confirmPassword) {
         setError("Passwords not matching! Please try again");
       } else {
-        Axios.post("http://localhost:5000/signup/", {
+        Axios.post("http://localhost:5000/auth/signup/", {
           username: username,
           password: password,
           name: name,

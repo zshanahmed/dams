@@ -22,7 +22,7 @@ import Axios from "axios";
 import {
   Button,
   Card,
-  CardHeader,
+  //CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -46,7 +46,7 @@ const Login = () => {
 
   const loginUser = () => {
     if (username && password) {
-      Axios.post("http://localhost:5000/signin/", {
+      Axios.post("http://localhost:5000/auth/signin/", {
         username: username,
         password: password,
       }).then((response) => {
@@ -64,14 +64,14 @@ const Login = () => {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/signin").then(
+    Axios.get("http://localhost:5000/auth/signin").then(
       (response) => {
         if (localStorage.getItem("token")) {
           setLogStatus(true);}
       },
       (err) => console.log(err)
     );
-  }, []);
+  }, [logStatus]);
 
   return (
     <>

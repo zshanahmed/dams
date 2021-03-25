@@ -42,26 +42,26 @@ const verfiyJWT = (req, res, next) => {
 };
 
 app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
+    cors({
+      origin: ["http://localhost:3000"],
+      methods: ["GET", "POST"],
+      credentials: true,
+    })
 );
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 app.use(
-  session({
-    key: "userId",
-    secret: "subscribe",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 60 * 60 * 24 * 1000,
-    },
-  })
+    session({
+      key: "userId",
+      secret: "subscribe",
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        expires: 60 * 60 * 24 * 1000,
+      },
+    })
 );
 
 const login = (req, res) => {

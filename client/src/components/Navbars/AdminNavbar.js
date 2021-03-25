@@ -93,7 +93,7 @@ const AdminNavbar = (props) => {
                 <DropdownItem divider />
                 <DropdownItem>
                   <i className="ni ni-user-run" />
-                  <Logout />
+                  <span>Logout</span>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

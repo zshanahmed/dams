@@ -22,20 +22,49 @@ import Register from "./views/examples/Register.js";
 import Login from "./views/examples/Login.js";
 import Tables from "./views/examples/Tables.js";
 import Icons from "./views/examples/Icons.js";
+import Home from "./webpages/Home.js"
+import PledgeFormPage from "./webpages/PldegeFormPage";
+import DisasterFormPage from "./webpages/DisasterFormPage";
+
 
 var routes = [
+  // {
+  //   path: "/index",
+  //   name: "Dashboard",
+  //   icon: "ni ni-tv-2 text-primary",
+  //   component: Index,
+  //   invisible: true,
+  //   layout: "/admin",
+  // },
   {
     path: "/index",
     name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: Index,
+    icon: "ni ni-folder-17 text-red",
+    component: Home,
     layout: "/admin",
   },
   {
     path: "/tables",
     name: "Resources",
     icon: "ni ni-bullet-list-67 text-red",
+    invisible: true,
     component: Tables,
+    layout: "/admin",
+  },
+  {
+    path: "/pledge",
+    name: "Pledge",
+    invisible: false,
+    icon: "ni ni-collection text-pink",
+    component: PledgeFormPage,
+    layout: "/admin",
+  },
+  {
+    path: "/disaster",
+    name: "Disaster",
+    invisible: false,
+    icon: "ni ni-atom text-cyan",
+    component: DisasterFormPage,
     layout: "/admin",
   },
   {
@@ -57,6 +86,7 @@ var routes = [
     path: "/user-profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
+    invisible: true,
     component: Profile,
     layout: "/admin",
   },

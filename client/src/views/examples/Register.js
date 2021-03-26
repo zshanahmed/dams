@@ -38,6 +38,7 @@ import {
   UncontrolledDropdown,
   Col,
 } from "reactstrap";
+import {useHistory} from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -50,13 +51,14 @@ const Register = () => {
   const [role, setRole] = useState("Role");
 
   const [error, setError] = useState("");
+  const history = useHistory();
 
   const regUser = () => {
     if (username && password && confirmPassword) {
       if (password !== confirmPassword) {
         setError("Passwords not matching! Please try again");
       } else {
-        Axios.post("http://localhost:5000/auth/signup/", {
+        Axios.post("http://localhost:5000/signup/", {
           username: username,
           password: password,
           name: name,
@@ -69,6 +71,7 @@ const Register = () => {
             setError("Username already exists!");
           } else {
             alert("Sucessfully signed up");
+            history.push('/');
             window.location.reload();
           }
         });

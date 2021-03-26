@@ -1,4 +1,7 @@
+.idea
 node_modules
 client/node_modules/
+client/build/
+client/.eslintcache
+server/.eslintcache
 .env
-.idea

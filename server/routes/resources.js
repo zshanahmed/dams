@@ -1,4 +1,4 @@
-import express from 'express';
+ import express from 'express';
 
 import { getResource, getAllResources, insertResource } from '../controllers/resources.js';
 

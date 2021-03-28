@@ -16,7 +16,7 @@ import Axios from "axios";
 import {
   Button,
   Card,
-  CardHeader,
+  //CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -46,10 +46,21 @@ const Login = () => {
       }).then((response) => {
         if (!response.data.auth) {
           setLogStatus(false);
+          setMessage("Incorrect username or password");
         } else {
-          history.push("/admin/index");
+          var userInfo = response.data.result[0];
+          delete userInfo['password']; // Deletes users' password from JSON array
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
           setLogStatus(true);
+          setMessage("Successfully Logged In");
+          if (userInfo.role === "Admin") {
+            history.push("/admin/index");
+          } else if (userInfo.role === "Donor") {
+            history.push("/donor/index");
+          } else if (userInfo.role === "Recipient") {
+            history.push("/admin/index");
+          }
         }
       });
     } else {

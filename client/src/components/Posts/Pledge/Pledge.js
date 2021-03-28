@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import './Pledge.css';
-import Header from "../../Headers/Header";
-import {Card, CardHeader, Container, Row, Table} from "reactstrap";
+//import Header from "../../Headers/Header";
+import {Card, CardHeader, /*Container,*/ Row, Table} from "reactstrap";
 
 function Pledge() {
     const [resourceList, setResourceList] = useState([]);

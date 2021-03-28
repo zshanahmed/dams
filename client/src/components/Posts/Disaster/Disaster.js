@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import './Disaster.css';
-import Header from "../../Headers/Header";
-import {Card, CardHeader, Container, Row, Table} from "reactstrap";
+//import Header from "../../Headers/Header";
+import {Card, CardHeader, /*Container,*/ Row, Table} from "reactstrap";
 
 function Disasters() {
   const [disasterList, setDisasterList] = useState([]);
@@ -22,7 +22,7 @@ function Disasters() {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Disaster</h3>
+                  <h3 className="mb-0">Disasters</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">

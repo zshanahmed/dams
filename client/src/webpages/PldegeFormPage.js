@@ -1,4 +1,3 @@
-import DisasterForm from '../components/Forms/Disaster/DisasterForm';
 import Header from "../components/Headers/Header";
 import {Card, CardHeader, Container, Row} from "reactstrap";
 import React from "react";

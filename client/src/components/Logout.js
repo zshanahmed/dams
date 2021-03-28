@@ -1,23 +1,11 @@
-import { relativeTimeRounding } from "moment";
-import React, { Component, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "reactstrap";
 
 const Logout = () => {
-  const [navigate, setNavigate] = useState(false);
-  const history = useHistory();
+  localStorage.clear("token");
 
-  const logout = () => {
-    setNavigate(true);
+  console.log("Logout successful!");
+  window.location.replace("/");
 
-    localStorage.clear("token");
-  };
-
-  if (navigate) {
-    console.log("here");
-    history.push("/");
-  }
-  return <Button onClick={logout}>Logout</Button>;
+  return;
 };
 
 export default Logout;

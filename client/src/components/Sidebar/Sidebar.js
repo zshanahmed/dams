@@ -17,7 +17,7 @@
 */
 /*eslint-disable*/
 import React, { useState } from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import { NavLink as NavLinkRRD, Link, Redirect } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
@@ -54,7 +54,13 @@ import {
 
 var ps;
 
+const aliasMap = {'Admin': '/admin', 'Donor': '/donor', 'Recipient': '/recipient'}
+
 const Sidebar = (props) => {
+  var userData = JSON.parse(localStorage.getItem("userInfo"));
+
+  var userRoleAlias = aliasMap[userData.role];
+
   const [collapseOpen, setCollapseOpen] = useState();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -73,7 +79,7 @@ const Sidebar = (props) => {
     return routes.map((prop, key) => {
       if (prop.invisible) {
         return null;
-      } else {
+      } else if ((prop.layout == userRoleAlias) || (prop.layout == "/")) {
         return (
           <NavItem key={key}>
             <NavLink

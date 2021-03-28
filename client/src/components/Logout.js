@@ -1,6 +1,6 @@
 
 const Logout = () => {
-  localStorage.clear("token");
+  localStorage.clear();
 
   console.log("Logout successful!");
   window.location.replace("/");

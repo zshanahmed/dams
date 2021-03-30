@@ -45,10 +45,14 @@ const Login = () => {
         password: password,
       }).then((response) => {
         if (!response.data.auth) {
+          console.log(response)
           setLogStatus(false);
+          setMessage(response.data.message);
         } else {
-          history.push("/admin/index");
+          console.log(response)
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userId", response.data.result[0].username);
+          history.push("/admin/index");
           setLogStatus(true);
         }
       });

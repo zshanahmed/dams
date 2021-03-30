@@ -24,11 +24,11 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-const verfiyJWT = (req, res, next) => {
-  const token = req.headers("x-access-token");
+export const verfiyJWT = (req, res, next) => {
+  const token = req.header("x-access-token");
 
   if (!token) {
-    res.send("You are not authenticated! Please log in with your credentials");
+    res.json({ auth: false});
   } else {
     jwt.verify(token, "jwtSecret", (err, decoded) => {
       if (err) {
@@ -107,8 +107,8 @@ app.get("/signin", (req, res) => {
   }
 });
 
-app.use("/admin/pledge", resourceRouter);
-app.use("/admin/disaster", disasterRouter);
+app.use("/admin/pledge", verfiyJWT, resourceRouter);
+app.use("/admin/disaster", verfiyJWT, disasterRouter);
 app.use("/signup", registerRouter);
 app.use("/", loginRouter);
 

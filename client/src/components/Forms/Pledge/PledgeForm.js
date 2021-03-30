@@ -12,7 +12,11 @@ function PledgeForm() {
             {
                 donorName: donorName, 
                 resource: resource
-            }).then(() => {
+            }, {
+                    headers: {
+                        "x-access-token" : localStorage.getItem('token')
+                    },
+                }).then(() => {
                 alert('Sucessfully added');
                 window.location.reload();
             });

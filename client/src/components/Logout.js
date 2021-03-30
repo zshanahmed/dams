@@ -9,14 +9,10 @@ const Logout = () => {
 
   const logout = () => {
     setNavigate(true);
-
     localStorage.clear("token");
+    history.push("/auth/login");
   };
 
-  if (navigate) {
-    console.log("here");
-    history.push("/");
-  }
   return <Button onClick={logout}>Logout</Button>;
 };
 

@@ -4,13 +4,25 @@ import Axios from 'axios';
 import './Disaster.css';
 import Header from "../../Headers/Header";
 import {Card, CardHeader, Container, Row, Table} from "reactstrap";
+import {useHistory} from "react-router";
 
 function Disasters() {
   const [disasterList, setDisasterList] = useState([]);
+  const history = useHistory()
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/admin/disaster/all").then((response) => {
-      setDisasterList(response.data)
+    Axios.get("http://localhost:5000/admin/disaster/all",
+        {
+          headers: {
+          "x-access-token" : localStorage.getItem('token')
+          },
+        }).then((response) => {
+        console.log(response.data.auth);
+        if (!response.data.auth){
+            history.push("/");
+        } else {
+          setDisasterList(response.data.result)
+        }
     })
   }, [])
 

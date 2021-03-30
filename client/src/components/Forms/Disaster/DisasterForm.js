@@ -15,7 +15,11 @@ function DisasterForm() {
                 date: date, 
                 location: location,
                 type: type
-            }).then(() => {
+            }, {
+                    headers: {
+                        "x-access-token" : localStorage.getItem('token')
+                    },
+                }).then(() => {
                 alert('Sucessfully added');
                 window.location.reload();
             });

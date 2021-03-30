@@ -3,7 +3,7 @@ import connection from '../index.js';
 export const getAllResources = (req, res) => {
   const sqlSelect = "SELECT * from resources;"
   connection.query(sqlSelect, (err, result) => {
-      res.send(result);
+    res.json({result: result, auth: true})
   })
 }
 
@@ -11,7 +11,7 @@ export const getResource = (req, res) => {
   const resourceId = req.query.id;
   const sqlSelect = "SELECT * from resources WHERE id=?;"
   connection.query(sqlSelect, [resourceId], (err, result) => {
-      res.send(result);
+    res.json({result: result, auth: true})
   })
 }
 

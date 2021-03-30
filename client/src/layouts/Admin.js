@@ -79,6 +79,7 @@ const Admin = (props) => {
         <AdminNavbar
           {...props}
           brandText={getBrandText(props.location.pathname)}
+          route={props.location.pathname}
         />
         <Switch>
           {getRoutes(routes)}

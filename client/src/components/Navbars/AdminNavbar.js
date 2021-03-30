@@ -43,7 +43,7 @@ const AdminNavbar = (props) => {
         <Container fluid>
           <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-            to="/"
+            to={props.route}
           >
             {props.brandText}
           </Link>
@@ -65,7 +65,7 @@ const AdminNavbar = (props) => {
                 <Media className="align-items-center">
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      {localStorage.getItem('userId')}
                     </span>
                   </Media>
                 </Media>
@@ -93,7 +93,7 @@ const AdminNavbar = (props) => {
                 <DropdownItem divider />
                 <DropdownItem>
                   <i className="ni ni-user-run" />
-                  <span>Logout</span>
+                  <Logout/>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

@@ -4,13 +4,24 @@ import Axios from 'axios';
 import './Pledge.css';
 import Header from "../../Headers/Header";
 import {Card, CardHeader, Container, Row, Table} from "reactstrap";
+import {useHistory} from "react-router";
 
 function Pledge() {
     const [resourceList, setResourceList] = useState([]);
+    const history = useHistory();
   
     useEffect(() => {
-      Axios.get("http://localhost:5000/admin/pledge/all").then((response) => {
-        setResourceList(response.data)
+      Axios.get("http://localhost:5000/admin/pledge/all", {
+          headers: {
+              "x-access-token" : localStorage.getItem('token')
+          },
+      }).then((response) => {
+          console.log(response);
+          if (!response.data.auth){
+              history.push("/");
+          } else {
+              setResourceList(response.data.result)
+          }
       })
     }, [])
   

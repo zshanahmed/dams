@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import './Disaster.css';
-import Header from "../../Headers/Header";
 import {Card, CardHeader, Container, Row, Table} from "reactstrap";
 import {useHistory} from "react-router";
 
 function Disasters() {
   const [disasterList, setDisasterList] = useState([]);
+  const ac = new AbortController();
   const history = useHistory()
 
   useEffect(() => {
@@ -24,6 +24,7 @@ function Disasters() {
           setDisasterList(response.data.result)
         }
     })
+      return () => ac.abort();
   }, [])
 
   return (

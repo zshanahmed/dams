@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import './Pledge.css';
-import Header from "../../Headers/Header";
 import {Card, CardHeader, Container, Row, Table} from "reactstrap";
 import {useHistory} from "react-router";
 
 function Pledge() {
     const [resourceList, setResourceList] = useState([]);
+    const ac = new AbortController();
     const history = useHistory();
   
     useEffect(() => {
@@ -23,6 +23,7 @@ function Pledge() {
               setResourceList(response.data.result)
           }
       })
+        return () => ac.abort();
     }, [])
   
     return (

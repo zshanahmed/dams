@@ -4,16 +4,14 @@ import { useHistory } from "react-router-dom";
 import { Button } from "reactstrap";
 
 const Logout = () => {
-  const [navigate, setNavigate] = useState(false);
   const history = useHistory();
 
   const logout = () => {
-    setNavigate(true);
     localStorage.clear("token");
     history.push("/auth/login");
   };
 
-  return <Button onClick={logout}>Logout</Button>;
+  return <Button onClick={logout}><i className="ni ni-user-run" />  Logout</Button>;
 };
 
 export default Logout;

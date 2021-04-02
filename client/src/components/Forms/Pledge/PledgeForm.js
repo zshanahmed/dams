@@ -23,6 +23,10 @@ function PledgeForm() {
         }
     };
 
+    Axios.get('http://localhost:5000/signin/').then((response) => {
+        console.log(response);
+    })
+
     return (
         <div className="PledgeForm">
             <div className="pl-lg-4">

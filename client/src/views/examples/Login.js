@@ -35,6 +35,7 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [logStatus, setLogStatus] = useState(false);
   const history = useHistory();
+  const ac = new AbortController();
 
   Axios.defaults.withCredentials = true;
 
@@ -69,6 +70,7 @@ const Login = () => {
         },
         (err) => console.log(err)
     );
+    ac.abort();
   }, []);
 
   return (

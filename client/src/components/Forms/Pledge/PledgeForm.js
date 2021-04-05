@@ -116,7 +116,7 @@ function PledgeForm() {
                                 className="form-control-label"
                                 htmlFor="input-donor"
                             ><i className="ni ni-circle-08 pr-2" />
-                                Donor Information
+                                Donor Information:
                             </label>
                             <ListGroupItem
                                 className="form-control-alternative"

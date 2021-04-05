@@ -4,8 +4,7 @@ import Header from "../components/Headers/Header";
 import {Container} from "reactstrap";
 import React from "react";
 
-function Home() {
-
+function DonorHome() {
     return(
         <div className="Pledge">
             <Header/>
@@ -21,4 +20,4 @@ function Home() {
     )
 }
 
-export default Home
+export default DonorHome;

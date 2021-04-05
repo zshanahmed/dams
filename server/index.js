@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 
 import resourceRouter from "../server/routes/resources.js";
 import disasterRouter from "../server/routes/disasters.js";
+import pledgeRouter from "../server/routes/pledge.js";
 import { registerRouter } from "../server/routes/auth.js";
 
 // For Session Handling
@@ -107,8 +108,7 @@ app.get("/signin", (req, res) => {
   }
 });
 
-app.use("/admin/pledge", resourceRouter);
-//app.use("/admin/pledge", verfiyJWT, resourceRouter);
+app.use("/admin/pledge", verfiyJWT, resourceRouter);
 app.use("/admin/disaster", verfiyJWT, disasterRouter);
 app.use("/signup", registerRouter);
 app.use("/", loginRouter);

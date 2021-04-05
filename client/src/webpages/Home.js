@@ -5,7 +5,6 @@ import {Container} from "reactstrap";
 import React from "react";
 
 function Home() {
-
     return(
         <div className="Pledge">
             <Header/>

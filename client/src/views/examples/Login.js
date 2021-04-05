@@ -16,7 +16,7 @@ import Axios from "axios";
 import {
   Button,
   Card,
-  //CardHeader,
+  CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -58,14 +58,6 @@ const Login = () => {
           localStorage.setItem("userData", JSON.stringify(userInfo));
           history.push("/admin/index");
           setLogStatus(true);
-          setMessage("Successfully Logged In");
-          if (userInfo.role === "Admin") {
-            history.push("/admin/index");
-          } else if (userInfo.role === "Donor") {
-            history.push("/donor/index");
-          } else if (userInfo.role === "Recipient") {
-            history.push("/admin/index");
-          }
         }
       });
     } else {

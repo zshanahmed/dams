@@ -70,7 +70,7 @@ const Register = () => {
           if (res.data.errno === 1062) {
             setError("Username already exists!");
           } else {
-            //alert("Sucessfully signed up");
+            alert("Sucessfully signed up");
             history.push('/');
             window.location.reload();
           }

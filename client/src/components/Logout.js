@@ -1,7 +1,3 @@
-import { relativeTimeRounding } from "moment";
-import React, { Component, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "reactstrap";
 
 const Logout = () => {
   const history = useHistory();

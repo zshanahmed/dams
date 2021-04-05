@@ -20,27 +20,28 @@ import Maps from "./views/examples/Maps.js";
 import Register from "./views/examples/Register.js";
 import Login from "./views/examples/Login.js";
 import Tables from "./views/examples/Tables.js";
-import Icons from "./views/examples/Icons.js";
+//import Icons from "./views/examples/Icons.js";
 import Home from "./webpages/Home.js"
 import PledgeFormPage from "./webpages/PldegeFormPage";
 import DisasterFormPage from "./webpages/DisasterFormPage";
-
+import DonorHome from "./webpages/DonorHome.js";
+//import Logout from "./components/Logout.js";
 
 var routes = [
-  // {
-  //   path: "/index",
-  //   name: "Dashboard",
-  //   icon: "ni ni-tv-2 text-primary",
-  //   component: Index,
-  //   invisible: true,
-  //   layout: "/admin",
-  // },
   {
     path: "/index",
     name: "Dashboard",
     icon: "ni ni-folder-17 text-red",
     component: Home,
     layout: "/admin",
+  },
+  {
+    path: "/index",
+    name: "Donor Home",
+    invisible: false,
+    icon: "ni ni-folder-17 text-red",
+    component: DonorHome,
+    layout: "/donor",
   },
   {
     path: "/tables",
@@ -52,11 +53,19 @@ var routes = [
   },
   {
     path: "/pledge",
-    name: "Pledge",
+    name: "Pledge Pg",
     invisible: false,
     icon: "ni ni-collection text-pink",
     component: PledgeFormPage,
     layout: "/admin",
+  },
+  {
+    path: "/pledge",
+    name: "Pledge/Donation",
+    invisible: false,
+    icon: "ni ni-collection text-pink",
+    component: PledgeFormPage,
+    layout: "/donor",
   },
   {
     path: "/disaster",
@@ -66,13 +75,13 @@ var routes = [
     component: DisasterFormPage,
     layout: "/admin",
   },
-  {
+  /*{
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
     component: Icons,
     layout: "/admin",
-  },
+  },*/
   {
     path: "/maps",
     name: "Maps",
@@ -106,5 +115,13 @@ var routes = [
     component: Register,
     layout: "/auth",
   },
+/*  {
+    path: "/logout",
+    name: "Logout",
+    invisible: true,
+    icon: "ni ni-circle-08 text-pink",
+    component: Logout,
+    layout: "/",
+  },*/
 ];
 export default routes;

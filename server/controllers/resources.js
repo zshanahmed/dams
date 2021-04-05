@@ -1,7 +1,7 @@
 import connection from '../index.js';
 
 export const getAllResources = (req, res) => {
-  const sqlSelect = "SELECT * from pledge;"
+  const sqlSelect = "SELECT * from resources;"
   connection.query(sqlSelect, (err, result) => {
     res.json({result: result, auth: true})
   })

@@ -51,8 +51,11 @@ const Login = () => {
           setMessage(response.data.message);
         } else {
           console.log(response)
+          var userInfo = response.data.result[0];
+          delete userInfo['password']; // Deletes users' password from JSON array
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.result[0].username);
+          localStorage.setItem("userData", JSON.stringify(userInfo));
           history.push("/admin/index");
           setLogStatus(true);
         }

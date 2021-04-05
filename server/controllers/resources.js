@@ -27,3 +27,19 @@ export const insertResource = (req, res) => {
     }
   })
 }
+
+// Add new pledge to db
+export const insertPledge = (req, res) => {
+  const resourceId = req.body.resourceId;
+  const quantity = req.body.quantity;
+  const userId = req.body.userId;
+  const expiration = req.body.expiration;
+  const sqlInsert = "INSERT into pledge (userID, resourceID, quantity, expiration) VALUES (?,?,?,?)"
+  connection.query(sqlInsert, [userId, resourceId, quantity, expiration], (err, result) => {
+      if (err) { 
+        console.log(err);
+      } else {
+        res.status(200).send();
+      }
+  })
+}

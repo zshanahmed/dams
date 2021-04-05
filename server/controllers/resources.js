@@ -10,18 +10,16 @@ export const getAllResources = (req, res) => {
 export const getResource = (req, res) => {
   const userID = req.query.userId;
   const sqlSelect = "SELECT * FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE userID=(?);";
-  //"SELECT pledge.id, resources.resource, pledge.quantity, pledge.isValid, resources.unit FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE userID=(?);";
   connection.query(sqlSelect, [userID], (err, result) => {
     res.json({result: result, auth: true})
-    console.log("inside");
   })
 }
 
 export const insertResource = (req, res) => {
-  const donorName = req.body.donorName;
+  const unit = req.body.unit;
   const resource = req.body.resource;
-  const sqlInsert = "INSERT into resources (donorName, resource) VALUES (?,?)"
-  connection.query(sqlInsert, [donorName, resource], (err, result) => {
+  const sqlInsert = "INSERT into resources (unit, resource) VALUES (?,?)"
+  connection.query(sqlInsert, [unit, resource], (err, result) => {
     if (err) { 
       console.log(err); 
     } else {

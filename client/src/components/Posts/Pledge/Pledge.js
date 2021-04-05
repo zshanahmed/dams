@@ -18,7 +18,7 @@ function Pledge() {
               "x-access-token" : localStorage.getItem('token')
           },
       }).then((response) => {
-          console.log(response);
+          //console.log(response);
           if (!response.data.auth){
               history.push("/");
           } else {
@@ -48,7 +48,6 @@ function Pledge() {
                               </thead>
                               <tbody>
                                   {resourceList.map((val) => {
-                                      console.log(val.expiration);
                                     if (val.isValid) {
                                         return (
                                             <tr>

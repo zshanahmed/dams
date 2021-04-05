@@ -17,7 +17,7 @@ function Disasters() {
           "x-access-token" : localStorage.getItem('token')
           },
         }).then((response) => {
-        console.log(response.data.auth);
+        //console.log(response.data.auth);
         if (!response.data.auth){
             history.push("/");
         } else {

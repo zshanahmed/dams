@@ -46,6 +46,9 @@ const Login = () => {
       }).then((response) => {
         if (!response.data.auth) {
           setLogStatus(false);
+          if (logStatus) {
+            console.log("true");
+          }
           setMessage("Incorrect username or password");
         } else {
           var userInfo = response.data.result[0];

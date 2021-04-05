@@ -5,11 +5,13 @@ import './Pledge.css';
 //import Header from "../../Headers/Header";
 import {Card, CardHeader, /*Container,*/ Row, Table} from "reactstrap";
 
+var userData = JSON.parse(localStorage.getItem("userInfo"));
+
 function Pledge() {
     const [resourceList, setResourceList] = useState([]);
-  
+  //
     useEffect(() => {
-      Axios.get("http://localhost:5000/admin/pledge/all").then((response) => {
+      Axios.get(`http://localhost:5000/admin/pledge/`).then((response) => {
         setResourceList(response.data)
       })
     }, [])

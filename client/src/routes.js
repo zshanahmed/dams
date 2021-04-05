@@ -62,7 +62,7 @@ var routes = [
   },
   {
     path: "/pledge",
-    name: "Pledge",
+    name: "Pledge/Donation",
     invisible: false,
     icon: "ni ni-collection text-pink",
     component: PledgeFormPage,

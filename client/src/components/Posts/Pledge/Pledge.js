@@ -9,9 +9,11 @@ function Pledge() {
     const [resourceList, setResourceList] = useState([]);
     const ac = new AbortController();
     const history = useHistory();
-  
+
+    var userData = JSON.parse(localStorage.getItem("userData"));
+
     useEffect(() => {
-      Axios.get("http://localhost:5000/admin/pledge/all", {
+      Axios.get(`http://localhost:5000/admin/pledge/?userId=${userData.id}`, {
           headers: {
               "x-access-token" : localStorage.getItem('token')
           },
@@ -34,26 +36,28 @@ function Pledge() {
                   <div className="col">
                       <Card className="shadow">
                           <CardHeader className="border-0">
-                              <h3 className="mb-0">Resources</h3>
+                              <h3 className="mb-0">My Pledges</h3>
                           </CardHeader>
                           <Table className="align-items-center table-flush" responsive>
                               <thead className="thead-light">
                               <tr>
-                                  <th scope="col">Sr#</th>
-                                  <th scope="col">Donor Name</th>
                                   <th scope="col">Resource</th>
-
+                                  <th scope="col">Quantity</th>
+                                  <th scope="col">Expiration</th>
                               </tr>
                               </thead>
                               <tbody>
                                   {resourceList.map((val) => {
-                                      return (
-                                          <tr>
-                                              <td>{val.id}</td>
-                                              <td>{val.donorName}</td>
-                                              <td>{val.resource}</td>
-                                          </tr>
-                                      )
+                                      console.log(val.expiration);
+                                    if (val.isValid) {
+                                        return (
+                                            <tr>
+                                                <td>{val.resource}</td>
+                                                <td>{val.quantity} {val.unit}</td>
+                                                <td>{val.expiration.split("T")[0]}</td>
+                                            </tr>
+                                        )
+                                    }
                                   })}
                               </tbody>
                           </Table>

@@ -1,17 +1,19 @@
 import connection from '../index.js';
 
 export const getAllResources = (req, res) => {
-  const sqlSelect = "SELECT * from resources;"
+  const sqlSelect = "SELECT * from pledge;"
   connection.query(sqlSelect, (err, result) => {
     res.json({result: result, auth: true})
   })
 }
 
 export const getResource = (req, res) => {
-  const resourceId = req.query.id;
-  const sqlSelect = "SELECT * from resources WHERE id=?;"
-  connection.query(sqlSelect, [resourceId], (err, result) => {
+  const userID = req.query.userId;
+  const sqlSelect = "SELECT * FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE userID=(?);";
+  //"SELECT pledge.id, resources.resource, pledge.quantity, pledge.isValid, resources.unit FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE userID=(?);";
+  connection.query(sqlSelect, [userID], (err, result) => {
     res.json({result: result, auth: true})
+    console.log("inside");
   })
 }
 

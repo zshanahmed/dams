@@ -24,6 +24,7 @@ import Icons from "./views/examples/Icons.js";
 import Home from "./webpages/Home.js"
 import PledgeFormPage from "./webpages/PldegeFormPage";
 import DisasterFormPage from "./webpages/DisasterFormPage";
+import DonorHome from "./webpages/DonorHome";
 
 
 var routes = [
@@ -89,7 +90,13 @@ var routes = [
     component: Profile,
     layout: "/admin",
   },
-
+  {
+    path: "/index",
+    name: "Donor Home",
+    icon: "ni ni-single-02 text-yellow",
+    component: DonorHome,
+    layout: "/donor", 
+  },
   {
     path: "/login",
     name: "Login",

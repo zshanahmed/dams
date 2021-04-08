@@ -52,11 +52,21 @@ const Login = () => {
         } else {
           console.log(response)
           var userInfo = response.data.result[0];
+          var userRole = userInfo.role;
+          console.log(userRole);
           delete userInfo['password']; // Deletes users' password from JSON array
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.result[0].username);
           localStorage.setItem("userData", JSON.stringify(userInfo));
-          history.push("/admin/index");
+          if (userRole === 'Admin') {
+            history.push("/admin/index");
+          } else if (userRole === 'Donor') {
+            history.push("/donor/index");
+          //} else if (userRole === "Recipient") {
+          //  history.push("/recipient/index");
+          } else {
+            history.push("/auth/login");
+          }
           setLogStatus(true);
         }
       });

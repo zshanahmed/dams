@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -25,12 +25,14 @@ import AdminFooter from "../components/Footers/AdminFooter.js";
 import Sidebar from "../components/Sidebar/Sidebar.js";
 
 import routes from "../routes.js";
+import Axios from 'axios';
 
 const Donor = (props) => {
   const mainContent = React.useRef(null);
+  const [logStatus, setLogStatus] = useState(false)
   const location = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
@@ -52,6 +54,16 @@ const Donor = (props) => {
     });
   };
 
+  useEffect(() => {
+    Axios.get("http://localhost:5000/signin").then((response) => {
+      if (response.data.loggedIn){
+        setLogStatus(true);
+      } else {
+        setLogStatus(false);
+      }
+    })
+  }, [])
+
   const getBrandText = (path) => {
     for (let i = 0; i < routes.length; i++) {
       if (
@@ -70,7 +82,7 @@ const Donor = (props) => {
         {...props}
         routes={routes}
         logo={{
-          innerLink: "/donor/",
+          innerLink: "/donor/index",
           imgSrc: require("../assets/img/brand/argon-react.png").default,
           imgAlt: "...",
         }}
@@ -79,10 +91,11 @@ const Donor = (props) => {
         <AdminNavbar
           {...props}
           brandText={getBrandText(props.location.pathname)}
+          route={props.location.pathname}
         />
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/donor/" />
+          <Redirect from="*" to="/donor/index" />
         </Switch>
         <Container fluid>
           <AdminFooter />

@@ -53,6 +53,7 @@ import {
 } from "reactstrap";
 
 var ps;
+var userData = JSON.parse(localStorage.getItem("userData"));
 
 const Sidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
@@ -73,7 +74,7 @@ const Sidebar = (props) => {
     return routes.map((prop, key) => {
       if (prop.invisible) {
         return null;
-      } else {
+      } else if (prop.layout.slice(1) === userData.role.toLowerCase()) {
         return (
           <NavItem key={key}>
             <NavLink

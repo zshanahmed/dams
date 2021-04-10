@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import './Pledge.css';
-import {Card, CardHeader, Container, Row, Table} from "reactstrap";
+import {Card, CardHeader, Container, FormGroup, Row, Table} from "reactstrap";
 import {useHistory} from "react-router";
 
 function Pledge() {
@@ -11,6 +11,11 @@ function Pledge() {
     const history = useHistory();
 
     var userData = JSON.parse(localStorage.getItem("userData"));
+
+    const editPledge = (val) => {
+        console.log(val);
+        history.push(`/donor/pledge?id=${val}`);
+    } 
 
     useEffect(() => {
       Axios.get(`http://localhost:5000/admin/pledge/?userId=${userData.id}`, {
@@ -44,6 +49,7 @@ function Pledge() {
                                   <th scope="col">Resource</th>
                                   <th scope="col">Quantity</th>
                                   <th scope="col">Expiration</th>
+                                  <th scope="col"></th>
                               </tr>
                               </thead>
                               <tbody>
@@ -54,6 +60,11 @@ function Pledge() {
                                                 <td>{val.resource}</td>
                                                 <td>{val.quantity} {val.unit}</td>
                                                 <td>{val.expiration.split("T")[0]}</td>
+                                                <td>
+                                                    <FormGroup>
+                                                        <button id={val.id} className="btn btn-primary" onClick={(e) => {editPledge(e.target.id)}}>Edit</button>
+                                                    </FormGroup>
+                                                </td>
                                             </tr>
                                         )
                                     }

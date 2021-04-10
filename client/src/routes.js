@@ -93,9 +93,17 @@ var routes = [
   {
     path: "/index",
     name: "Donor Home",
-    icon: "ni ni-single-02 text-yellow",
+    icon: "ni ni-folder-17 text-purple",
     component: DonorHome,
     layout: "/donor", 
+  },
+  {
+    path: "/pledge",
+    name: "Pledge Form",
+    invisible: false,
+    icon: "ni ni-collection text-pink",
+    component: PledgeFormPage,
+    layout: "/donor",
   },
   {
     path: "/login",

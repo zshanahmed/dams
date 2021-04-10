@@ -9,11 +9,11 @@ function DonorHome() {
         <div className="Pledge">
             <Header/>
             <Container className="mt--7" fluid>
-                <div>
-                    <Disaster/>
-                </div>
                 <div className="mt-4">
                     <Pledge />
+                </div>
+                <div className="mt-4">
+                    <Disaster/>
                 </div>
             </Container>
         </div>

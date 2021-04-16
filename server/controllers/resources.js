@@ -15,6 +15,14 @@ export const getResource = (req, res) => {
   })
 }
 
+export const getPledgeById = (req, res) => {
+  const pledgeID = req.query.id;
+  const sqlSelect = "SELECT * FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE pledge.id=(?);";
+  connection.query(sqlSelect, [pledgeID], (err, result) => {
+    res.json({result: result, auth: true})
+  })
+}
+
 export const insertResource = (req, res) => {
   const unit = req.body.unit;
   const resource = req.body.resource;
@@ -25,6 +33,22 @@ export const insertResource = (req, res) => {
     } else {
       res.status(200).send();
     }
+  })
+}
+
+// Get Requests
+export const getRequests = (req, res) => {
+  //const sqlInsert = "SELECT id, disasterID, resourceID, quantity FROM requests WHERE donorID IS NULL";
+  const sqlInsert = `SELECT requests.id, disasters.location, resources.resource, resources.unit, quantity FROM requests 
+  INNER JOIN resources ON requests.resourceID=resources.id 
+  INNER JOIN disasters ON requests.disasterID=disasters.id
+  WHERE donorID IS NULL;`;
+  connection.query(sqlInsert, (err, result) => {
+      if (err) { 
+        console.log(err);
+      } else {
+        res.json({result: result, auth: true});
+      }
   })
 }
 

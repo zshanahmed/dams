@@ -25,6 +25,7 @@ import Home from "./webpages/Home.js"
 import PledgeFormPage from "./webpages/PldegeFormPage";
 import DisasterFormPage from "./webpages/DisasterFormPage";
 import DonorHome from "./webpages/DonorHome";
+import EditPledgePage from "./webpages/EditPledgePage.js";
 
 
 var routes = [
@@ -103,6 +104,14 @@ var routes = [
     invisible: false,
     icon: "ni ni-collection text-pink",
     component: PledgeFormPage,
+    layout: "/donor",
+  },
+  {
+    path: "/editPledge",
+    name: "Edit Pledge Form",
+    invisible: true,
+    icon: "ni ni-collection text-pink",
+    component: EditPledgePage,
     layout: "/donor",
   },
   {

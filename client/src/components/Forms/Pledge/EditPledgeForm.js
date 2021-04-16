@@ -5,17 +5,24 @@ import {useHistory} from "react-router";
 
 var userData = JSON.parse(localStorage.getItem("userData"));
 
-function PledgeForm() {
+function EditPledgeForm() {
     const [resourceList, setResourceList] = useState([]);
+    const [currentData, setCurrentData] = useState([]);
     const history = useHistory();
     var donorId = userData.id;
+    var pledgeId = null;
+    const [date, setDate] = useState('');
+    const [pledgeID, setPledgeID] = useState('');
     const [resourceId, setResourceId] = useState('');
     const [expiration, setExpiration] = useState('');
     const [quantity, setQuantity] = useState('');
-    var existingPledge = false;
 
     useEffect(() => {
-        Axios.get("http://localhost:5000/admin/pledge/all", {
+        const urlParams = new URLSearchParams(window.location.search);
+        pledgeId = urlParams.get('id');
+        setPledgeID(pledgeId);
+        if (pledgeId) {
+            Axios.get(`http://localhost:5000/admin/pledge/pledge/?id=${pledgeId}`, {
                 headers: {
                     "x-access-token" : localStorage.getItem('token')
                 },
@@ -24,9 +31,26 @@ function PledgeForm() {
                 if (!response.data.auth){
                     history.push("/");
                 } else {
-                    setResourceList(response.data.result)
+                    setDate(response.data.result[0].expiration.split("T")[0]);
+                    setCurrentData(response.data.result[0]);
                 }
             })
+            // Load data into form set flag for updating existing record
+        } else {
+            history.push("/donor/index");
+        }
+        Axios.get("http://localhost:5000/admin/pledge/all", {
+            headers: {
+                "x-access-token" : localStorage.getItem('token')
+            },
+        }).then((response) => {
+            //console.log(response);
+            if (!response.data.auth){
+                history.push("/");
+            } else {
+                setResourceList(response.data.result)
+            }
+        })
           //return () => ac.abort();
       }, [])
   
@@ -49,6 +73,10 @@ function PledgeForm() {
         }
     };
 
+    const setCalDate = () => {
+        document.getElementById("expiration").value = date;
+    }
+
     Axios.get('http://localhost:5000/signin/').then((response) => {
         //console.log(response);
     })
@@ -62,7 +90,7 @@ function PledgeForm() {
                             <Label
                                 className="form-control-label"
                                 htmlFor="input-resource"
-                            ><i className="ni ni-basket pr-2" />Pledge an Item</Label>
+                            ><i className="ni ni-basket pr-2" />Edit Pledge ID#{pledgeID}</Label>
                             <Row>
                                 <Label>Resource: </Label>
                                 <Input
@@ -75,11 +103,13 @@ function PledgeForm() {
                                         setResourceId(dropd.options[dropd.selectedIndex].id);
                                         document.getElementById("addonUnit").textContent = dropd.options[dropd.selectedIndex].value;
                                     }}>
-                                <option selected value="Units">Please select resource</option>
+                                <option selected value={currentData.units}>{currentData.resource}</option>
                                 {resourceList.map((val) => {
-                                    return (
-                                        <option id={val.id} value={val.unit}>{val.resource}</option>
-                                    )
+                                    if(val.resource != currentData.resource) {
+                                        return (
+                                            <option id={val.id} value={val.unit}>{val.resource}</option>
+                                        )
+                                    }
                                   })}
                                 </Input>
                             </Row>
@@ -88,10 +118,12 @@ function PledgeForm() {
                                 <Input
                                     type="date"
                                     id="expiration"
+                                    value={date}
                                     onChange={(e) => {
                                         setExpiration(e.target.value);
                                     }}
                                 />
+                                
                             </Row>
                             <Row>
                                 <Label>Quantity: </Label>
@@ -101,9 +133,10 @@ function PledgeForm() {
                                     onChange={(e) => {
                                         setQuantity(e.target.value);
                                     }}
+                                    value={currentData.quantity}
                                 />
                                 <InputGroupAddon addonType="append">
-                                    <InputGroupText id="addonUnit">Units</InputGroupText>
+                                    <InputGroupText id="addonUnit">{currentData.unit}</InputGroupText>
                                 </InputGroupAddon>
                                 </InputGroup>
                             </Row>
@@ -132,7 +165,7 @@ function PledgeForm() {
                     <Col md="8">
                         <div className="text-center">
                             <FormGroup>
-                                <button className="btn btn-primary" onClick={submitReview}>Submit</button>
+                                <button className="btn btn-primary" onClick={submitReview}>Update Pledge</button>
                             </FormGroup>
                         </div>
                     </Col>
@@ -143,4 +176,4 @@ function PledgeForm() {
     );
   }
   
-  export default PledgeForm;
+  export default EditPledgeForm;

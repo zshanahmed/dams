@@ -27,7 +27,7 @@ function Pledge() {
           if (!response.data.auth){
               history.push("/");
           } else {
-              setResourceList(response.data.result)
+              setResourceList(response.data.result);
           }
       })
         return () => ac.abort();
@@ -55,6 +55,7 @@ function Pledge() {
                               <tbody>
                                   {resourceList.map((val) => {
                                     if (val.isValid) {
+                                        console.log(val);
                                         return (
                                             <tr>
                                                 <td>{val.resource}</td>

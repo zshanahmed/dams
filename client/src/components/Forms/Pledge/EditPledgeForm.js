@@ -31,9 +31,9 @@ function EditPledgeForm() {
                 if (!response.data.auth){
                     history.push("/");
                 } else {
-                    setDate(response.data.result[0].expiration.split("T")[0]);
                     setCurrentData(response.data.result[0]);
-                    setPledgeID(currentData.id);
+                    setDate(response.data.result[0].expiration.split("T")[0]);
+                    //console.log(response.data.result[0].expiration.split("T")[0]);
                     setExpiration(currentData.expiration);
                     setResourceId(currentData.resourceID);
                     setQuantity(currentData.quantity);
@@ -63,7 +63,7 @@ function EditPledgeForm() {
             console.log(donorId, resourceId, expiration, quantity);
             Axios.post("http://localhost:5000/admin/pledge/put",
             {
-                id: pledgeID, 
+                id: pledgeId, 
                 resourceId: resourceId,
                 expiration: expiration.split("T")[0],
                 quantity: quantity

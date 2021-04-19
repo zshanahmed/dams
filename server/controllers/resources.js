@@ -9,8 +9,9 @@ export const getAllResources = (req, res) => {
 
 export const getResource = (req, res) => {
   const userID = req.query.userId;
-  const sqlSelect = "SELECT * FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE userID=(?);";
+  const sqlSelect = "SELECT *, pledge.id FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE userID=(?);";
   connection.query(sqlSelect, [userID], (err, result) => {
+    console.log(result);
     res.json({result: result, auth: true})
   })
 }

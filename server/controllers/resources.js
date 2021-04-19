@@ -67,3 +67,19 @@ export const insertPledge = (req, res) => {
       }
   })
 }
+
+// update pledge
+export const updatePledge = (req, res) => {
+  const resourceId = req.body.resourceId;
+  const quantity = req.body.quantity;
+  const id = req.body.id;
+  const expiration = req.body.expiration;
+  const sqlInsert = "UPDATE pledge SET resourceID = ?, quantity = ?, expiration = ? WHERE (id = '?')";
+  connection.query(sqlInsert, [resourceId, quantity, expiration, id], (err, result) => {
+      if (err) { 
+        console.log(err);
+      } else {
+        res.status(200).send();
+      }
+  })
+}

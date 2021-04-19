@@ -33,6 +33,10 @@ function EditPledgeForm() {
                 } else {
                     setDate(response.data.result[0].expiration.split("T")[0]);
                     setCurrentData(response.data.result[0]);
+                    setPledgeID(currentData.id);
+                    setExpiration(currentData.expiration);
+                    setResourceId(currentData.resourceID);
+                    setQuantity(currentData.quantity);
                 }
             })
             // Load data into form set flag for updating existing record
@@ -54,28 +58,29 @@ function EditPledgeForm() {
           //return () => ac.abort();
       }, [])
   
-    const submitReview = () => {
+    const updateItem = () => {
         if (resourceId && expiration && quantity){
-            Axios.post("http://localhost:5000/admin/pledge/",
+            console.log(donorId, resourceId, expiration, quantity);
+            Axios.post("http://localhost:5000/admin/pledge/put",
             {
-                userId: donorId, 
+                id: pledgeID, 
                 resourceId: resourceId,
-                expiration: expiration,
+                expiration: expiration.split("T")[0],
                 quantity: quantity
             }, {
                     headers: {
                         "x-access-token" : localStorage.getItem('token')
                     },
                 }).then(() => {
-                alert('Sucessfully added');
+                alert('Sucessfully updated item');
                 //window.location.reload();
             });
         }
     };
 
-    const setCalDate = () => {
-        document.getElementById("expiration").value = date;
-    }
+    const onInputChange = (event) => {
+        document.getElementById(event.target.id).value=event.target.value;
+      }
 
     Axios.get('http://localhost:5000/signin/').then((response) => {
         //console.log(response);
@@ -103,7 +108,7 @@ function EditPledgeForm() {
                                         setResourceId(dropd.options[dropd.selectedIndex].id);
                                         document.getElementById("addonUnit").textContent = dropd.options[dropd.selectedIndex].value;
                                     }}>
-                                <option selected value={currentData.units}>{currentData.resource}</option>
+                                <option selected id={currentData.resourceID} value={currentData.unit}>{currentData.resource}</option>
                                 {resourceList.map((val) => {
                                     if(val.resource != currentData.resource) {
                                         return (
@@ -118,8 +123,9 @@ function EditPledgeForm() {
                                 <Input
                                     type="date"
                                     id="expiration"
-                                    value={date}
+                                    defaultValue={date}
                                     onChange={(e) => {
+                                        onInputChange(e);
                                         setExpiration(e.target.value);
                                     }}
                                 />
@@ -130,11 +136,11 @@ function EditPledgeForm() {
                                 <InputGroup>
                                 <Input
                                     id="quantity"
+                                    defaultValue={currentData.quantity}
                                     onChange={(e) => {
+                                        onInputChange(e);
                                         setQuantity(e.target.value);
-                                    }}
-                                    value={currentData.quantity}
-                                />
+                                    }}/>
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText id="addonUnit">{currentData.unit}</InputGroupText>
                                 </InputGroupAddon>
@@ -165,7 +171,7 @@ function EditPledgeForm() {
                     <Col md="8">
                         <div className="text-center">
                             <FormGroup>
-                                <button className="btn btn-primary" onClick={submitReview}>Update Pledge</button>
+                                <button className="btn btn-primary" onClick={updateItem}>Update Pledge</button>
                             </FormGroup>
                         </div>
                     </Col>

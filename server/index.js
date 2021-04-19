@@ -13,6 +13,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 
 import jwt from "jsonwebtoken";
+import pledgeRouter from "./routes/pledge.js";
 const app = express();
 
 var connection = mysql.createConnection({

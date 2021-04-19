@@ -18,8 +18,6 @@ export const getUserPledges = (req, res) => {
 
 // get specific pledge
 
-// update pledge
-
 // Add new pledge to db
 export const insertPledge = (req, res) => {
   const resourceId = req.body.resourceId;

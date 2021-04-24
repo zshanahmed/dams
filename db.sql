@@ -39,3 +39,13 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `request` (
+                           `id` int NOT NULL AUTO_INCREMENT,
+                           `donorId` int DEFAULT NULL,
+                           `recipientId` int DEFAULT NULL,
+                           `disasterId` int DEFAULT NULL,
+                           `resourceId` int DEFAULT NULL,
+                           `quantity` int DEFAULT NULL,
+                           PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

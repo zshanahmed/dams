@@ -5,7 +5,7 @@ CREATE TABLE `disasters` (
   `type` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `iddisasters_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `pledge` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -17,14 +17,24 @@ CREATE TABLE `pledge` (
   `isValid` tinyint DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idpledge_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `requests` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `requestorID` int DEFAULT NULL,
+  `donorID` int DEFAULT NULL,
+  `disasterID` int DEFAULT NULL,
+  `resourceID` int DEFAULT NULL,
+  `quantity` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `resources` (
   `id` int NOT NULL AUTO_INCREMENT,
   `unit` varchar(45) NOT NULL,
   `resource` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,

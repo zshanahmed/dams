@@ -25,6 +25,7 @@ import Home from "./webpages/Home.js"
 import PledgeFormPage from "./webpages/PldegeFormPage";
 import DisasterFormPage from "./webpages/DisasterFormPage";
 import DonorHome from "./webpages/DonorHome";
+import RecipientHome from "./webpages/RecipientHome";
 import EditPledgePage from "./webpages/EditPledgePage.js";
 
 
@@ -97,6 +98,13 @@ var routes = [
     icon: "ni ni-folder-17 text-purple",
     component: DonorHome,
     layout: "/donor", 
+  },
+  {
+    path: "/index",
+    name: "Recipient Home",
+    icon: "ni ni-folder-17 text-purple",
+    component: RecipientHome,
+    layout: "/recipient",
   },
   {
     path: "/pledge",

@@ -62,8 +62,9 @@ const Login = () => {
             history.push("/admin/index");
           } else if (userRole === 'Donor') {
             history.push("/donor/index");
-          //} else if (userRole === "Recipient") {
-          //  history.push("/recipient/index");
+          } else if (userRole === "Recipient") {
+            console.log("here in login");
+           history.push("/recipient/index");
           } else {
             history.push("/auth/login");
           }

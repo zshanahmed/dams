@@ -37,6 +37,17 @@ export const insertResource = (req, res) => {
   })
 }
 
+export const getAllItems = (req, res) => {
+  const sqlInsert = "SELECT * from resources;"
+  connection.query(sqlInsert, (err, result) => {
+    if (err) { 
+      console.log(err); 
+    } else {
+      res.json({result: result, auth: true});
+    }
+  })
+}
+
 // Get Requests
 export const getRequests = (req, res) => {
   //const sqlInsert = "SELECT id, disasterID, resourceID, quantity FROM requests WHERE donorID IS NULL";

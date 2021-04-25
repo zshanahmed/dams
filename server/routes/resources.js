@@ -1,6 +1,6 @@
  import express from 'express';
 
-import { getResource, getAllResources, insertPledge, getRequests, getPledgeById, updatePledge, insertResource } from '../controllers/resources.js';
+import { getResource, getAllResources, insertPledge, getRequests, getPledgeById, updatePledge, insertResource, getAllItems } from '../controllers/resources.js';
 
 const resourceRouter = express.Router();
 
@@ -12,7 +12,10 @@ resourceRouter.get('/pledge', getPledgeById);
 
 resourceRouter.get('/request', getRequests);
 
-//resourceRouter.post('/',  insertResource);
+resourceRouter.post('/item',  insertResource);
+
+resourceRouter.get('/allItems', getAllItems);
+
 resourceRouter.post('/',  insertPledge);
 
 resourceRouter.post('/put', updatePledge);

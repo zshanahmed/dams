@@ -26,6 +26,7 @@ import PledgeFormPage from "./webpages/PldegeFormPage";
 import DisasterFormPage from "./webpages/DisasterFormPage";
 import DonorHome from "./webpages/DonorHome";
 import EditPledgePage from "./webpages/EditPledgePage.js";
+import ResourceFormPage from "./webpages/ResourceFormPage.js";
 
 
 var routes = [
@@ -61,6 +62,13 @@ var routes = [
     layout: "/admin",
   },
   {
+    path: "/item",
+    name: "Resource/Item",
+    icon: "ni ni-pin-3 text-orange",
+    component: ResourceFormPage,
+    layout: "/admin",
+  },
+  {
     path: "/disaster",
     name: "Disaster",
     invisible: false,
@@ -73,14 +81,6 @@ var routes = [
     name: "Icons",
     icon: "ni ni-planet text-blue",
     component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    invisible: true,
-    component: Maps,
     layout: "/admin",
   },
   {

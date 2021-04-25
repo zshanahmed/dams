@@ -54,7 +54,7 @@ export const login = (req, res) => {
       bcrypt.compare(password, result[0].password, (err, response) => {
         if (response) {
           req.session.user = result;
-          console.log(req.session.user);
+          //console.log(req.session.user);
           res.send(result);
         } else {
           res.send({ message: "Wrong username/password combination" });

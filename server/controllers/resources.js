@@ -11,7 +11,7 @@ export const getResource = (req, res) => {
   const userID = req.query.userId;
   const sqlSelect = "SELECT *, pledge.id FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE userID=(?);";
   connection.query(sqlSelect, [userID], (err, result) => {
-    console.log(result);
+    //console.log(result);
     res.json({result: result, auth: true})
   })
 }
@@ -37,8 +37,34 @@ export const insertResource = (req, res) => {
   })
 }
 
+export const updateResource = (req, res) => {
+  const unit = req.body.unit;
+  const resource = req.body.resource;
+  const resourceId = req.body.resourceId;
+  const sqlInsert = "UPDATE resources SET unit = ?, resource = ? WHERE (id = '?');";
+  connection.query(sqlInsert, [unit, resource, resourceId], (err, result) => {
+    if (err) { 
+      console.log(err); 
+    } else {
+     res.status(200).send();
+   }
+  })
+}
+
+export const deleteResource = (req, res) => {
+  const resourceId = req.body.resourceId;
+  const sqlInsert = "UPDATE resources SET isValid=0 WHERE resources.id = ('?');";
+  connection.query(sqlInsert, [resourceId], (err, result) => {
+    if (err) { 
+      console.log(err); 
+    } else {
+     res.status(200).send();
+   }
+  })
+}
+
 export const getAllItems = (req, res) => {
-  const sqlInsert = "SELECT * from resources;"
+  const sqlInsert = "SELECT * FROM resources WHERE isValid=1;"
   connection.query(sqlInsert, (err, result) => {
     if (err) { 
       console.log(err); 

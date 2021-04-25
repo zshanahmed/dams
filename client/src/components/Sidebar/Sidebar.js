@@ -122,7 +122,7 @@ const Sidebar = (props) => {
           <span className="navbar-toggler-icon" />
         </button>
         {/* Brand */}
-        <h1 className="p-2"><a href="/admin/index">DAMS</a></h1>
+        <h1 className="p-2"><a href="">DAMS</a></h1>
         {/* User */}
         <Nav className="align-items-center d-md-none">
           <UncontrolledDropdown nav>

@@ -69,7 +69,7 @@ function ResourceForm() {
     }
 
     const deleteItem = () => {
-        var r = window.confirm(`Are you sure you want to delete item: "${selectedItem}", ID#${selectedItemId}`);
+        var r = window.confirm(`Are you sure you want to delete item: "${selectedItem}", ID#${selectedItemId}?`);
         if (r == true) {
             // Delete item from db
             Axios.post("http://localhost:5000/admin/pledge/delItem",

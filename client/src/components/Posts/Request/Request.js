@@ -12,9 +12,9 @@ function Request() {
 
     var userData = JSON.parse(localStorage.getItem("userData"));
 
-    const editPledge = (val) => {
-        console.log(val);
-        history.push(`/donor/pledge?id=${val}`);
+    const fulfilRequest = (val) => {
+        // console.log(val);
+        history.push(`/donor/pledge?reqID=${val}`);
     } 
 
     useEffect(() => {
@@ -55,19 +55,21 @@ function Request() {
                               </thead>
                               <tbody>
                                   {resourceList.map((val) => {
+                                    if (val.quantity > 0) {
                                     return (
                                         <tr>
                                             <td>{val.id}</td>
-                                            <td>{val.location}</td>
+                                            <td>{`(${val.type}) ${val.location}`}</td>
                                             <td>{val.resource}</td>
                                             <td>{val.quantity} {val.unit}</td>
                                             <td>
                                                 <FormGroup>
-                                                    <button id={val.id} className="btn btn-primary" onClick={(e) => {editPledge(e.target.id)}}>Fulfill</button>
+                                                    <button id={val.id} className="btn btn-primary" onClick={(e) => {fulfilRequest(e.target.id)}}>Fulfill</button>
                                                 </FormGroup>
                                             </td>
                                         </tr>
                                     )
+                                    }
                                   })}
                               </tbody>
                           </Table>

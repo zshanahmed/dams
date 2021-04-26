@@ -48,19 +48,17 @@ function Pledge() {
                               <tr>
                                   <th scope="col">Resource</th>
                                   <th scope="col">Quantity</th>
-                                  <th scope="col">Expiration</th>
                                   <th scope="col"></th>
                               </tr>
                               </thead>
                               <tbody>
                                   {resourceList.map((val) => {
                                     if (val.isValid) {
-                                        console.log(val);
+                                        //console.log(val.isValid);
                                         return (
                                             <tr>
                                                 <td>{val.resource}</td>
                                                 <td>{val.quantity} {val.unit}</td>
-                                                <td>{val.expiration.split("T")[0]}</td>
                                                 <td>
                                                     <FormGroup>
                                                         <button id={val.id} className="btn btn-primary" onClick={(e) => {editPledge(e.target.id)}}>Edit</button>

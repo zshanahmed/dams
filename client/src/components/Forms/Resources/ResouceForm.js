@@ -49,7 +49,7 @@ function ResourceForm() {
     };
 
     const updateItem = () => {
-        if (itemName && itemUnit) {
+        if (itemName && itemUnit && selectedItemId) {
             Axios.post("http://localhost:5000/admin/pledge/item/",
             {
                 resource: itemName, 
@@ -170,7 +170,7 @@ function ResourceForm() {
                             <Row>
                                 <Dropdown id="dropdown" isOpen={dropdownOpen} toggle={toggle}>
                                     <DropdownToggle caret>
-                                        Select an Existing Item
+                                        Select an Existing Item to Edit
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         <DropdownItem id="0" onClick={selectItem}>Create New Resource Item</DropdownItem>

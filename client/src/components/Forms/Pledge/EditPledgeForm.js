@@ -56,7 +56,7 @@ function EditPledgeForm() {
       }, [])
   
     const updatePledge = () => {
-        if (resourceId && quantity){
+        if (resourceId && quantity && pledgeID){
             Axios.post("http://localhost:5000/admin/pledge/put",
             {
                 id: pledgeID, 
@@ -70,6 +70,8 @@ function EditPledgeForm() {
                 // Set message onscreen
                 setMessage(`Updated pledge`, "badge-success");
             });
+        } else {
+            setMessage(`Missing required data`, "badge-warning");
         }
     };
 

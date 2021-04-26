@@ -115,7 +115,7 @@ export const getRequestById = (req, res) => {
 export const updateRequestFulfill = (req, res) => {
   const requestId = req.body.requestID;
   const quantity = req.body.quantity;
-  console.log(requestId, quantity);
+  // console.log(requestId, quantity);
   const sqlInsert = "UPDATE requests SET quantity = ? WHERE requests.id = ?;";
   connection.query(sqlInsert, [quantity, requestId], (err, result) => {
     if (err) { 

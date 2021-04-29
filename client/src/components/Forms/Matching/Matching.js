@@ -7,10 +7,11 @@ import {setMessage, closeMsg} from '../../../functions.js';
 var userData = JSON.parse(localStorage.getItem("userData"));
 
 function Matching() {
-    const [resourceList, setResourceList] = useState([]);
+    const [requestList, setRequestList] = useState([]);
     const [pledgeList, setPledgeList] = useState([]);
-    const [resourceID, setResourceID] = useState('');
-    const [selectedResouce, setSelectedResource] = useState('');
+    const [selectedRequest, setSelectedRequest] = useState('');
+    const [selectedPledge, setSelectedPledge] = useState('');
+    const [matchedUser, setMatchedUser] = useState('');
     const history = useHistory();
     var donorId = userData.id;
 
@@ -24,7 +25,7 @@ function Matching() {
             if (!response.data.auth){
                 history.push("/");
             } else {
-                setResourceList(response.data.result)
+                setRequestList(response.data.result)
             }
         })
     }, [])
@@ -43,7 +44,24 @@ function Matching() {
                 setPledgeList(response.data.result)
             }
         })
+    }
 
+    const matchReqPledge = () => {
+        if (selectedRequest && selectedPledge) {
+            // if ((quantity < requestQuantity) && (quantity > 0)) {
+            //     // Submit pledge with requestID and isValid to 0 (for pledge)
+            //     // Update current request validity to false (0)
+            //     submitFulfillment(0, (requestQuantity - quantity));
+            //     document.getElementById("fulfillBtn").setAttribute("hidden", "");
+            // } else if (quantity >= requestQuantity) {
+            //     // Similar to submitReview() but need to add requestID and set isValid to 0 (for pledge)
+            //     // Need to update request quantity to 0 (for request)
+            //     submitFulfillment(0, 0);
+            //     document.getElementById("fulfillBtn").setAttribute("hidden", "");
+            // }
+        } else {
+            setMessage(`Missing required data`, "badge-warning");
+        }
     }
 
     return (
@@ -68,17 +86,17 @@ function Matching() {
                                 id="input-request"
                                 onChange={(e) => {
                                     var dropd = document.getElementById("input-request");
-                                    setResourceID(dropd.options[dropd.selectedIndex].id);
+                                    setSelectedRequest(dropd.options[dropd.selectedIndex].id);
                                     if (dropd.options[dropd.selectedIndex].id == "*") {
                                         document.getElementById("input-resource").setAttribute("hidden", "");
-                                        setSelectedResource('');
+                                        setSelectedRequest('');
                                     } else {
                                         getPledges(dropd.options[dropd.selectedIndex].id);
                                         document.getElementById("input-resource").removeAttribute("hidden");
                                     }
                                 }}>
                                 <option selected id="*" value="Units">Please select a request to match</option>
-                                {resourceList.map((val) => {
+                                {requestList.map((val) => {
                                     if (val.quantity > 0) {
                                         return (
                                             <option id={val.resourceID}>{`${val.location} (${val.type}) - ${val.resource} - ${val.quantity} ${val.unit}`}</option>
@@ -95,18 +113,28 @@ function Matching() {
                                 hidden
                                 onChange={(e) => {
                                     var dropd = document.getElementById("input-resource");
-                                    setSelectedResource(dropd.options[dropd.selectedIndex].id);
-                                    console.log(dropd.options[dropd.selectedIndex].id);
+                                    setSelectedPledge(dropd.options[dropd.selectedIndex].id);
+                                    setMatchedUser(dropd.options[dropd.selectedIndex].value);
+                                    // console.log(dropd.options[dropd.selectedIndex].value);
                                 }}>
-                                <option selected value="Units">Please select a pledge to match</option>
-                                {   pledgeList.map((val) => {
+                                <option selected value="">Please select a pledge to match</option>
+                                { pledgeList.map((val) => {
                                         return (
-                                            <option id={val.id} value={val.unit}>{val.resource} - {val.quantity} {val.unit} - {val.location} ({val.zip})</option>
+                                            <option id={val.id} value={val.userID}>{val.resource} - {val.quantity} {val.unit} - {val.location} ({val.zip})</option>
                                         )
                                     }
                                 )}
                             </Input>
                         </FormGroup>
+                    </Col>
+                </Row>
+                <Row className="dataRow">
+                    <Col>
+                        <div className="text-center">
+                            <FormGroup>
+                                <Button id="fulfillBtn" onClick={matchReqPledge} color="default">Match</Button>
+                            </FormGroup>
+                        </div>
                     </Col>
                 </Row>
             </div>

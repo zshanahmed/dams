@@ -38,7 +38,7 @@ export const getPledgeById = (req, res) => {
 // Get a pledge by resource ID
 export const getPledgeByResourceID = (req, res) => {
   const resourceID = req.query.id;
-  console.log(resourceID);
+  // console.log(resourceID);
   const sqlSelect = `SELECT pledge.*, resources.*, users.zip, users.location, pledge.id FROM pledge
   INNER JOIN resources ON pledge.resourceID=resources.id 
   INNER JOIN users ON pledge.userID=users.id 
@@ -185,7 +185,6 @@ export const updatePledge = (req, res) => {
   const resourceId = req.body.resourceId;
   const quantity = req.body.quantity;
   const id = req.body.id;
-  console.log('here');
   const sqlInsert = "UPDATE pledge SET resourceID = ?, quantity = ? WHERE pledge.id = ?";
   connection.query(sqlInsert, [resourceId, quantity, id], (err, result) => {
       if (err) { 

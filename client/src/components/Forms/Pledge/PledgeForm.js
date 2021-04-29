@@ -227,7 +227,7 @@ function PledgeForm() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md="8">
+                    <Col>
                         <div className="text-center">
                             <FormGroup>
                                 <Button id="addBtn" color="primary" onClick={submitReview}>Submit</Button>

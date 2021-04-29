@@ -111,9 +111,9 @@ function EditPledgeForm() {
 
     return (
         <div className="PledgeForm">
-            <div className="pl-lg-4">
+            <div className="px-lg-4">
                 <Row>
-                    <Col md="8">
+                    <Col>
                         <FormGroup>
                             <Label
                                 className="form-control-label"
@@ -164,7 +164,7 @@ function EditPledgeForm() {
                     </Col>
                 </Row>
                 <Row className="dataRow">
-                    <Col md="8">
+                    <Col>
                         <FormGroup>
                             <Label
                                 className="form-control-label"
@@ -182,7 +182,7 @@ function EditPledgeForm() {
                     </Col>
                 </Row>
                 <Row className="dataRow">
-                    <Col md="8">
+                    <Col>
                         <div className="text-center">
                             <FormGroup>
                                 <Button id="updateButton" color="primary" onClick={updatePledge}>Update Pledge</Button>

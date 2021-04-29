@@ -7,6 +7,30 @@ export const getAllResources = (req, res) => {
   })
 }
 
+export const getResourceByDisaster = (req, res) => {
+  const id = req.query.id
+  const sqlGet = "SELECT * from resources as rs INNER JOIN disaster_resource as ds ON ds.resourceID = rs.id WHERE rs.id=ds.resourceID and disasterID=(?) and rs.isValid=1;"
+  connection.query(sqlGet,[id], (err,result) => {
+    res.json({result: result, auth: true, id: id});
+  })
+}
+
+export const createRequest = (req, res) => {
+  const requestorID = req.body.requestorID
+  const donorID = req.body.donorID
+  const resourceId = req.body.resourceId
+  const disasterID = req.body.disasterID
+  const quantity = req.body.quantity
+  const sqlCreate = "INSERT into requests (requestorID, donorID, disasterID, resourceID, quantity) values (?,?,?,?,?);"
+  connection.query(sqlCreate, [requestorID, donorID, disasterID, resourceId, quantity], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send();
+    }
+  })
+}
+
 export const getResource = (req, res) => {
   const userID = req.query.userId;
   const sqlSelect = "SELECT *, pledge.id FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE userID=(?);";

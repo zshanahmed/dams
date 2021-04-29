@@ -2,13 +2,20 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import './Disaster.css';
-import {Card, CardHeader, Container, Row, Table} from "reactstrap";
+import {Card, CardHeader, Container, FormGroup, Row, Table} from "reactstrap";
 import {useHistory} from "react-router";
+
+const userData = JSON.parse(localStorage.getItem("userData"));
+
 
 function Disasters() {
   const [disasterList, setDisasterList] = useState([]);
   const ac = new AbortController();
   const history = useHistory()
+
+    const makeRequest = (id) => {
+        history.push(`/recipient/request?id=${id}`)
+    }
 
   useEffect(() => {
     Axios.get("http://localhost:5000/admin/disaster/all",
@@ -44,17 +51,22 @@ function Disasters() {
                     <th scope="col">Disaster</th>
                     <th scope="col">Date</th>
                     <th scope="col">Location</th>
-
+                      {userData.role == "Recipient" ? (
+                    <th scope="col"></th>) : (<br/>) }
                   </tr>
                   </thead>
                   <tbody>
                   {disasterList.map((val) => {
                     return (
-                        <tr>
+                        <tr key={val.id}>
                           <td>{val.id}</td>
                           <td>{val.type}</td>
                           <td>{val.date.slice(0,10)}</td>
                           <td>{val.location}</td>
+                            {userData.role == "Recipient" ? (
+                        <FormGroup>
+                            <button id={val.id} className="btn btn-primary mt-3" onClick={(e) => {makeRequest(e.target.id)}}>Make Request</button>
+                        </FormGroup>)  : (<br/>) }
                         </tr>
                     )
                   })}

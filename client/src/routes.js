@@ -23,6 +23,7 @@ import Tables from "./views/examples/Tables.js";
 import Icons from "./views/examples/Icons.js";
 import Home from "./webpages/Home.js"
 import PledgeFormPage from "./webpages/PldegeFormPage";
+import RequestFormPage from "./webpages/RequestFormPage";
 import DisasterFormPage from "./webpages/DisasterFormPage";
 import DonorHome from "./webpages/DonorHome";
 import RecipientHome from "./webpages/RecipientHome";
@@ -137,6 +138,14 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: Register,
     layout: "/auth",
+  },
+  {
+    path: "/request",
+    name: "Request",
+    invisible: true,
+    icon: "ni ni-circle-08 text-pink",
+    component: RequestFormPage,
+    layout: "/recipient",
   },
 ];
 export default routes;

@@ -74,7 +74,7 @@ const Sidebar = (props) => {
     return routes.map((prop, key) => {
       if (prop.invisible) {
         return null;
-      } else if (prop.layout.slice(1) === userData.role.toLowerCase()) {
+      } else if (userData && prop.layout.slice(1) === userData.role.toLowerCase()) {
         return (
           <NavItem key={key}>
             <NavLink

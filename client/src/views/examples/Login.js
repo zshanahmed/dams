@@ -16,7 +16,6 @@ import Axios from "axios";
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -63,7 +62,6 @@ const Login = () => {
           } else if (userRole === 'Donor') {
             history.push("/donor/index");
           } else if (userRole === "Recipient") {
-            console.log("here in login");
            history.push("/recipient/index");
           } else {
             history.push("/auth/login");

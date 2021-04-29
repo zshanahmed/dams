@@ -1,4 +1,3 @@
-import Pledge from '../components/Posts/Pledge/Pledge';
 import Disaster from '../components/Posts/Disaster/Disaster';
 import Request from '../components/Posts/Request/Request';
 import Header from "../components/Headers/Header";
@@ -12,9 +11,6 @@ function DonorHome() {
             <Container className="mt--7" fluid>
                 <div className="mt-4">
                     <Disaster/>
-                </div>
-                <div className="mt-4">
-                    <Request/>
                 </div>
             </Container>
         </div>

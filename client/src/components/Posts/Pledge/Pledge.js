@@ -60,7 +60,7 @@ function Pledge() {
                               <tbody>
                                   {resourceList.map((val) => {
                                     if (val.isValid) {
-                                        //console.log(val.isValid);
+                                        // console.log(val);
                                         return (
                                             <tr>
                                                 <td>{val.resource}</td>

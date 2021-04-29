@@ -32,6 +32,9 @@ function EditPledgeForm() {
                     setCurrentData(response.data.result[0]);
                     setResourceId(response.data.result[0].resourceID);
                     setQuantity(response.data.result[0].quantity);
+                    if (userData.role == "Admin") {
+                        document.getElementById("updateButton").setAttribute("hidden", "");
+                    }
                 } else {
                     history.push('/donor/index');
                 }

@@ -10,8 +10,9 @@ function Matching() {
     const [requestList, setRequestList] = useState([]);
     const [pledgeList, setPledgeList] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState('');
+    const [selectedReqIndex, setSelectedReqIndex] = useState('');
     const [selectedPledge, setSelectedPledge] = useState('');
-    const [matchedUser, setMatchedUser] = useState('');
+    const [selectedPledgeIndex, setSelectedPledgeIndex] = useState('');
     const history = useHistory();
     var donorId = userData.id;
 
@@ -25,13 +26,13 @@ function Matching() {
             if (!response.data.auth){
                 history.push("/");
             } else {
-                setRequestList(response.data.result)
+                setRequestList(response.data.result);
             }
         })
     }, [])
 
     const getPledges = (reqID) => {
-        console.log(reqID);
+        // console.log(reqID);
         Axios.get(`http://localhost:5000/admin/pledge/pledgeReqID?id=${reqID}`, {
             headers: {
                 "x-access-token" : localStorage.getItem('token')
@@ -41,24 +42,67 @@ function Matching() {
             if (!response.data.auth){
                 history.push("/");
             } else {
-                setPledgeList(response.data.result)
+                setPledgeList(response.data.result);
             }
         })
     }
 
+    const submitFulfillment = (isVal, matchQuantity, reqRemainingQuantity) => {
+        // console.log(matchQuantity, reqRemainingQuantity);
+        let selPledge = pledgeList[selectedPledgeIndex];
+        let selReq = requestList[selectedReqIndex];
+        Axios.post("http://localhost:5000/admin/pledge/match",
+            {
+                pledgeId: selPledge.id,
+                quantity: matchQuantity,
+                requestId: selReq.id,
+                isValid: isVal,
+            }, {
+                    headers: {
+                        "x-access-token" : localStorage.getItem('token')
+                    },
+                }).then(() => {
+                // Set message onscreen
+                setMessage(`Pledge submitted`, "badge-success");
+                document.getElementById("fulfillBtn").setAttribute("hidden", "");
+            });
+        Axios.post("http://localhost:5000/admin/pledge/updateReqFulfill",
+        {
+            requestID: selReq.id,
+            quantity: reqRemainingQuantity,
+        }, {
+                headers: {
+                    "x-access-token" : localStorage.getItem('token')
+                },
+            }).then(() => {
+            // Set message onscreen
+            setMessage(`Pledge submitted`, "badge-success");
+            document.getElementById("fulfillBtn").setAttribute("hidden", "");
+        });
+        document.getElementById('newBtn').setAttribute("hidden", "");
+    }
+
+    const newMatch = () => {
+        history.push('/admin/matching');
+    }
+
     const matchReqPledge = () => {
         if (selectedRequest && selectedPledge) {
-            // if ((quantity < requestQuantity) && (quantity > 0)) {
-            //     // Submit pledge with requestID and isValid to 0 (for pledge)
-            //     // Update current request validity to false (0)
-            //     submitFulfillment(0, (requestQuantity - quantity));
-            //     document.getElementById("fulfillBtn").setAttribute("hidden", "");
-            // } else if (quantity >= requestQuantity) {
-            //     // Similar to submitReview() but need to add requestID and set isValid to 0 (for pledge)
-            //     // Need to update request quantity to 0 (for request)
-            //     submitFulfillment(0, 0);
-            //     document.getElementById("fulfillBtn").setAttribute("hidden", "");
-            // }
+            console.log(pledgeList[selectedPledgeIndex]);
+            console.log(requestList[selectedReqIndex]);
+            let selPledge = pledgeList[selectedPledgeIndex];
+            let selReq = requestList[selectedReqIndex];
+            if ((selPledge.quantity < selReq.quantity) && (selPledge.quantity > 0)) {
+                // Submit pledge with requestID and isValid to 0 (for pledge)
+                // Update current request validity to false (0)
+                submitFulfillment(0, selPledge.quantity, (selReq.quantity - selPledge.quantity));
+                document.getElementById("fulfillBtn").setAttribute("hidden", "");
+            } else if (selPledge.quantity >= selReq.quantity) {
+                // Similar to submitReview() but need to add requestID and set isValid to 0 (for pledge)
+                // Need to update request quantity to 0 (for request)
+                submitFulfillment(0, selReq.quantity, 0);
+                document.getElementById("fulfillBtn").setAttribute("hidden", "");
+            }
         } else {
             setMessage(`Missing required data`, "badge-warning");
         }
@@ -79,6 +123,8 @@ function Matching() {
                                 <Button onClick={closeMsg} close />
                                 <Badge id="messageBadge" color="primary">Message Area</Badge>
                             </h1>
+                            <br></br>
+                            <Label>Request: </Label>
                             <Input
                                 className="form-control-alternative"
                                 type="select"
@@ -87,44 +133,46 @@ function Matching() {
                                 onChange={(e) => {
                                     var dropd = document.getElementById("input-request");
                                     setSelectedRequest(dropd.options[dropd.selectedIndex].id);
+                                    setSelectedReqIndex(dropd.options[dropd.selectedIndex].value);
                                     if (dropd.options[dropd.selectedIndex].id == "*") {
-                                        document.getElementById("input-resource").setAttribute("hidden", "");
+                                        document.getElementById("pledge-data").setAttribute("hidden", "");
                                         setSelectedRequest('');
                                     } else {
                                         getPledges(dropd.options[dropd.selectedIndex].id);
-                                        document.getElementById("input-resource").removeAttribute("hidden");
+                                        document.getElementById("pledge-data").removeAttribute("hidden");
                                     }
                                 }}>
-                                <option selected id="*" value="Units">Please select a request to match</option>
-                                {requestList.map((val) => {
+                                <option selected id="*" value="">Please select a request to match</option>
+                                {requestList.map((val, index) => {
                                     if (val.quantity > 0) {
                                         return (
-                                            <option id={val.resourceID}>{`${val.location} (${val.type}) - ${val.resource} - ${val.quantity} ${val.unit}`}</option>
+                                            <option id={val.resourceID} value={index}>{`${val.location} (${val.type}) - ${val.resource} - ${val.quantity} ${val.unit}`}</option>
                                         )
                                     }
                                 })}
                             </Input>
                             <br></br>
+                            <Col id="pledge-data" className="px-0" hidden>
+                            <Label>Pledge: </Label>
                             <Input
                                 className="form-control-alternative"
                                 type="select"
-                                name="resource"
-                                id="input-resource"
-                                hidden
+                                name="pledge"
+                                id="input-pledge"
                                 onChange={(e) => {
-                                    var dropd = document.getElementById("input-resource");
+                                    var dropd = document.getElementById("input-pledge");
                                     setSelectedPledge(dropd.options[dropd.selectedIndex].id);
-                                    setMatchedUser(dropd.options[dropd.selectedIndex].value);
-                                    // console.log(dropd.options[dropd.selectedIndex].value);
+                                    setSelectedPledgeIndex(dropd.options[dropd.selectedIndex].value);
                                 }}>
                                 <option selected value="">Please select a pledge to match</option>
-                                { pledgeList.map((val) => {
+                                { pledgeList.map((val, index) => {
                                         return (
-                                            <option id={val.id} value={val.userID}>{val.resource} - {val.quantity} {val.unit} - {val.location} ({val.zip})</option>
+                                            <option id={val.id} value={index}>{val.resource} - {val.quantity} {val.unit} - {val.location} ({val.zip})</option>
                                         )
                                     }
                                 )}
                             </Input>
+                            </Col>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -133,6 +181,7 @@ function Matching() {
                         <div className="text-center">
                             <FormGroup>
                                 <Button id="fulfillBtn" onClick={matchReqPledge} color="default">Match</Button>
+                                <Button id="newBtn" onClick={newMatch} color="default" hidden>New Match</Button>
                             </FormGroup>
                         </div>
                     </Col>

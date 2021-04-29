@@ -11,7 +11,7 @@ function ResourceForm() {
     const [itemUnit, setUnit] = useState('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const history = useHistory();
-    const [selectedItem, setSelItem] = useState('');
+    //const [selectedItem, setSelItem] = useState('');
     const [selectedItemId, setSelItemId] = useState('');
     var donorId = userData.id;
   
@@ -31,6 +31,7 @@ function ResourceForm() {
 
     const addItem = () => {
         if (itemName && itemUnit){
+            // console.log(itemName, itemUnit);
             Axios.post("http://localhost:5000/admin/pledge/item/",
             {
                 resource: itemName, 
@@ -49,8 +50,9 @@ function ResourceForm() {
     };
 
     const updateItem = () => {
+        // console.log(itemName, itemUnit, selectedItemId);
         if (itemName && itemUnit && selectedItemId) {
-            Axios.post("http://localhost:5000/admin/pledge/item/",
+            Axios.post("http://localhost:5000/admin/pledge/updateItem/",
             {
                 resource: itemName, 
                 unit: itemUnit,
@@ -69,9 +71,9 @@ function ResourceForm() {
     }
 
     const deleteItem = () => {
-        var r = window.confirm(`Are you sure you want to delete item: "${selectedItem}", ID#${selectedItemId}?`);
+        var r = window.confirm(`Are you sure you want to delete item: "${itemName}", ID#${selectedItemId}?`);
         if (r == true) {
-            // Delete item from db
+            // // Delete item from db
             Axios.post("http://localhost:5000/admin/pledge/delItem",
             {
                 resourceId: selectedItemId,
@@ -81,7 +83,7 @@ function ResourceForm() {
                     },
                 }).then(() => {
                 // Set message onscreen
-                setMessage(`Deleted resource: ${selectedItem}`, "badge-danger");
+                setMessage(`Deleted resource: ${itemName}`, "badge-danger");
             });
 
             // Remove items from dropdown list
@@ -91,6 +93,7 @@ function ResourceForm() {
                 }
             })
             document.getElementById("deleteButton").setAttribute("hidden", "");
+            document.getElementById("updateBtn").setAttribute("hidden", "");
             document.getElementById("item").value = "";
             document.getElementById("units").value = "";
         }
@@ -105,7 +108,8 @@ function ResourceForm() {
             document.getElementById("addBtn").setAttribute("hidden", "");
             document.getElementById("item").value = e.target.name;
             document.getElementById("units").value = e.target.value;
-            setSelItem(e.target.name);
+            setItem(e.target.name);
+            setUnit(e.target.value);
             setSelItemId(e.target.id);
         } else {
             document.getElementById("deleteButton").setAttribute("hidden", "");
@@ -113,6 +117,9 @@ function ResourceForm() {
             document.getElementById("updateBtn").setAttribute("hidden", "");
             document.getElementById("item").value = "";
             document.getElementById("units").value = "";
+            setItem('');
+            setUnit('');
+            setSelItemId('');
         }
     }
 

@@ -20,7 +20,7 @@ export const getResource = (req, res) => {
 
 // Get all pledges
 export const getAllPledge = (req, res) => {
-  const sqlSelect = "SELECT * FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE pledge.isValid=1;"
+  const sqlSelect = "SELECT *, pledge.id FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE pledge.isValid=1;"
   connection.query(sqlSelect, (err, result) => {
     res.json({result: result, auth: true})
   })
@@ -172,6 +172,22 @@ export const insertResponse = (req, res) => {
   const isValid = req.body.isValid;
   const sqlInsert = "INSERT into pledge (userID, resourceID, requestID, quantity, isValid) VALUES (?,?,?,?,?)"
   connection.query(sqlInsert, [userId, resourceId, requestId, quantity, isValid], (err, result) => {
+      if (err) { 
+        console.log(err);
+      } else {
+        res.status(200).send();
+      }
+  })
+}
+
+// Update a pledge when it is matched to a request
+export const matchUpdatePledge = (req, res) => {
+  const pledgeId = req.body.pledgeId;
+  const quantity = req.body.quantity;
+  const requestId = req.body.requestId;
+  const isValid = req.body.isValid;
+  const sqlInsert = "UPDATE pledge SET quantity = ?, requestID = ?, isValid = ? WHERE id = ?;"
+  connection.query(sqlInsert, [quantity, requestId, isValid, pledgeId], (err, result) => {
       if (err) { 
         console.log(err);
       } else {

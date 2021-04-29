@@ -134,9 +134,9 @@ function ResourceForm() {
 
     return (
         <div className="ResourceForm">
-            <div className="pl-lg-4">
+            <div className="px-lg-4">
                 <Row>
-                    <Col md="8">
+                    <Col>
                         <FormGroup>
                             <Label
                                 className="form-control-label"
@@ -186,7 +186,7 @@ function ResourceForm() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md="8">
+                    <Col>
                         <div className="text-center">
                             <FormGroup>
                                 <Button id="addBtn" color="primary" onClick={addItem}>Add Item</Button>

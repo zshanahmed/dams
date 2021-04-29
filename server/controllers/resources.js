@@ -18,11 +18,32 @@ export const getResource = (req, res) => {
   })
 }
 
+// Get all pledges
+export const getAllPledge = (req, res) => {
+  const sqlSelect = "SELECT * FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE pledge.isValid=1;"
+  connection.query(sqlSelect, (err, result) => {
+    res.json({result: result, auth: true})
+  })
+}
+
 // Get a pledge by ID
 export const getPledgeById = (req, res) => {
   const pledgeID = req.query.id;
   const sqlSelect = "SELECT * FROM pledge INNER JOIN resources ON pledge.resourceID=resources.id WHERE pledge.id=?;";
   connection.query(sqlSelect, [pledgeID], (err, result) => {
+    res.json({result: result, auth: true})
+  })
+}
+
+// Get a pledge by resource ID
+export const getPledgeByResourceID = (req, res) => {
+  const resourceID = req.query.id;
+  console.log(resourceID);
+  const sqlSelect = `SELECT pledge.*, resources.*, users.zip, users.location, pledge.id FROM pledge
+  INNER JOIN resources ON pledge.resourceID=resources.id 
+  INNER JOIN users ON pledge.userID=users.id 
+  WHERE pledge.resourceID=?;`;
+  connection.query(sqlSelect, [resourceID], (err, result) => {
     res.json({result: result, auth: true})
   })
 }
@@ -83,7 +104,7 @@ export const getAllItems = (req, res) => {
 
 // Get Requests
 export const getRequests = (req, res) => {
-  const sqlInsert = `SELECT requests.id, disasters.location, disasters.type, resources.resource, resources.unit, quantity FROM requests 
+  const sqlInsert = `SELECT requests.id, disasters.location, disasters.type, resources.resource, resources.unit, requests.resourceID, quantity FROM requests 
   INNER JOIN resources ON requests.resourceID=resources.id 
   INNER JOIN disasters ON requests.disasterID=disasters.id
   WHERE donorID IS NULL;`;
@@ -91,6 +112,7 @@ export const getRequests = (req, res) => {
       if (err) { 
         console.log(err);
       } else {
+        //console.log(result);
         res.json({result: result, auth: true});
       }
   })

@@ -137,9 +137,9 @@ function PledgeForm() {
 
     return (
         <div className="PledgeForm">
-            <div className="pl-lg-4">
+            <div className="px-lg-3">
                 <Row>
-                    <Col md="8">
+                    <Col class="md-8">
                         <FormGroup>
                             <Label
                                 className="form-control-label"
@@ -149,6 +149,7 @@ function PledgeForm() {
                                 <Button onClick={closeMsg} close />
                                 <Badge id="messageBadge" color="primary">Message Area</Badge>
                             </h1>
+                            <div class="px-3">
                             <Row id="pledgeResourceRow">
                                 <Label>Resource: </Label>
                                 <Input
@@ -203,11 +204,12 @@ function PledgeForm() {
                                 </InputGroupAddon>
                                 </InputGroup>
                             </Row>
+                            </div>
                         </FormGroup>
                     </Col>
                 </Row>
                 <Row>
-                    <Col md="8">
+                    <Col>
                         <FormGroup>
                             <label
                                 className="form-control-label"

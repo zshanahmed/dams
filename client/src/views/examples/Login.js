@@ -157,22 +157,14 @@ const Login = () => {
             </CardBody>
           </Card>
           <Row className="mt-3">
-            <Col xs="6">
+            <Col className="text-right">
+              <span className="text-light m-2">Don't have an account?</span>
               <a
-                  className="text-light"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-              >
-                <small>Forgot password?</small>
-              </a>
-            </Col>
-            <Col className="text-right" xs="6">
-              <a
-                  className="text-light"
+                  className="btn btn-primary p-2"
                   href="/auth/register"
                   // onClick={(e) => e.preventDefault()}
               >
-                <small>Create new account</small>
+                <strong>Click here</strong>
               </a>
             </Col>
           </Row>

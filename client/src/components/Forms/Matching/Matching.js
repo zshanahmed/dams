@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import {Col, FormGroup, Label, Row, Table, Button, Badge, Input} from "reactstrap";
+import {Col, FormGroup, Label, Row, Button, Badge, Input} from "reactstrap";
 import {useHistory} from "react-router";
 import {setMessage, closeMsg} from '../../../functions.js';
 
-var userData = JSON.parse(localStorage.getItem("userData"));
+// var userData = JSON.parse(localStorage.getItem("userData"));
 
 function Matching() {
     const [requestList, setRequestList] = useState([]);
@@ -14,7 +14,7 @@ function Matching() {
     const [selectedPledge, setSelectedPledge] = useState('');
     const [selectedPledgeIndex, setSelectedPledgeIndex] = useState('');
     const history = useHistory();
-    var donorId = userData.id;
+    // var donorId = userData.id;
 
     useEffect(() => {
         Axios.get(`http://localhost:5000/admin/pledge/request`, {
@@ -29,7 +29,7 @@ function Matching() {
                 setRequestList(response.data.result);
             }
         })
-    }, [])
+    })
 
     const getPledges = (reqID) => {
         // console.log(reqID);
@@ -134,7 +134,7 @@ function Matching() {
                                     var dropd = document.getElementById("input-request");
                                     setSelectedRequest(dropd.options[dropd.selectedIndex].id);
                                     setSelectedReqIndex(dropd.options[dropd.selectedIndex].value);
-                                    if (dropd.options[dropd.selectedIndex].id == "*") {
+                                    if (dropd.options[dropd.selectedIndex].id === "*") {
                                         document.getElementById("pledge-data").setAttribute("hidden", "");
                                         setSelectedRequest('');
                                     } else {
@@ -148,6 +148,8 @@ function Matching() {
                                         return (
                                             <option id={val.resourceID} value={index}>{`${val.location} (${val.type}) - ${val.resource} - ${val.quantity} ${val.unit}`}</option>
                                         )
+                                    } else {
+                                        return (null);
                                     }
                                 })}
                             </Input>
@@ -164,12 +166,12 @@ function Matching() {
                                     setSelectedPledge(dropd.options[dropd.selectedIndex].id);
                                     setSelectedPledgeIndex(dropd.options[dropd.selectedIndex].value);
                                 }}>
-                                <option selected value="">Please select a pledge to match</option>
+                                <option selected id="pledge-dropdown" value="">Please select a pledge to match</option>
                                 { pledgeList.map((val, index) => {
                                         return (
                                             <option id={val.id} value={index}>{val.resource} - {val.quantity} {val.unit} - {val.location} ({val.zip})</option>
                                         )
-                                    }
+                                }
                                 )}
                             </Input>
                             </Col>

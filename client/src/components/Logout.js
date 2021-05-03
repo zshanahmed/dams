@@ -8,6 +8,8 @@ const Logout = () => {
 
   const logout = () => {
     localStorage.clear("token");
+    localStorage.clear("userData");
+    localStorage.clear("userId");
     history.push("/auth/login");
   };
 

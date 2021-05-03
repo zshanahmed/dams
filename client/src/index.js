@@ -26,12 +26,14 @@ import "./assets/scss/argon-dashboard-react.scss";
 import AdminLayout from "./layouts/Admin.js";
 import DonorLayout from "./layouts/Donor.js";
 import AuthLayout from "./layouts/Auth.js";
+import RecipientLayout from "./layouts/Recipient";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/donor" render={(props) => <DonorLayout {...props} />} />
+      <Route path="/recipient" render={(props) => <RecipientLayout {...props} />} />
       <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
       {/* <Redirect from="/" to="/admin/index" /> */}
       <Redirect from="/" to="/auth/login" />

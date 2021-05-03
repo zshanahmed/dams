@@ -79,7 +79,7 @@ const login = (req, res) => {
           req.session.user = result;
           const id = result[0].id;
           const token = jwt.sign({ id }, "jwtSecret", {
-            expiresIn: 300,
+            expiresIn: 60 * 3,
           });
           req.session.user = result;
           //console.log(req.session.user[0]);
@@ -109,7 +109,7 @@ app.get("/signin", (req, res) => {
   }
 });
 
-app.use("/admin/pledge", resourceRouter);
+app.use("/admin/pledge", verfiyJWT, resourceRouter);
 //app.use("/admin/pledge", verfiyJWT, resourceRouter);
 app.use("/admin/disaster", verfiyJWT, disasterRouter);
 app.use("/signup", registerRouter);

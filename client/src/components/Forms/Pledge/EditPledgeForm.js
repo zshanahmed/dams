@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import {Col, FormGroup, Input, Label, ListGroupItem, InputGroupAddon, InputGroupText, Row, InputGroup} from "reactstrap";
+import {Col, FormGroup, Input, Label, ListGroupItem, InputGroupAddon, InputGroupText, Row, InputGroup, Button, Badge} from "reactstrap";
 import {useHistory} from "react-router";
+import {setMessage, closeMsg} from '../../../functions.js';
 
 var userData = JSON.parse(localStorage.getItem("userData"));
 
@@ -10,19 +11,16 @@ function EditPledgeForm() {
     const [currentData, setCurrentData] = useState([]);
     const history = useHistory();
     var donorId = userData.id;
-    var pledgeId = null;
-    const [date, setDate] = useState('');
     const [pledgeID, setPledgeID] = useState('');
     const [resourceId, setResourceId] = useState('');
-    const [expiration, setExpiration] = useState('');
     const [quantity, setQuantity] = useState('');
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        pledgeId = urlParams.get('id');
-        setPledgeID(pledgeId);
-        if (pledgeId) {
-            Axios.get(`http://localhost:5000/admin/pledge/pledge/?id=${pledgeId}`, {
+        let pledgeID = urlParams.get('id');
+        setPledgeID(pledgeID);
+        if (pledgeID) {
+            Axios.get(`http://localhost:5000/admin/pledge/pledge/?id=${pledgeID}`, {
                 headers: {
                     "x-access-token" : localStorage.getItem('token')
                 },
@@ -30,13 +28,15 @@ function EditPledgeForm() {
                 //console.log(response);
                 if (!response.data.auth){
                     history.push("/");
-                } else {
+                } else if (response.data.result[0]) {
                     setCurrentData(response.data.result[0]);
-                    setDate(response.data.result[0].expiration.split("T")[0]);
-                    //console.log(response.data.result[0].expiration.split("T")[0]);
-                    setExpiration(currentData.expiration);
-                    setResourceId(currentData.resourceID);
-                    setQuantity(currentData.quantity);
+                    setResourceId(response.data.result[0].resourceID);
+                    setQuantity(response.data.result[0].quantity);
+                    if (userData.role == "Admin") {
+                        document.getElementById("updateButton").setAttribute("hidden", "");
+                    }
+                } else {
+                    history.push('/donor/index');
                 }
             })
             // Load data into form set flag for updating existing record
@@ -58,25 +58,51 @@ function EditPledgeForm() {
           //return () => ac.abort();
       }, [])
   
-    const updateItem = () => {
-        if (resourceId && expiration && quantity){
-            console.log(donorId, resourceId, expiration, quantity);
+    const updatePledge = () => {
+        if (resourceId && quantity && pledgeID){
             Axios.post("http://localhost:5000/admin/pledge/put",
             {
-                id: pledgeId, 
+                id: pledgeID, 
                 resourceId: resourceId,
-                expiration: expiration.split("T")[0],
                 quantity: quantity
             }, {
                     headers: {
                         "x-access-token" : localStorage.getItem('token')
                     },
                 }).then(() => {
-                alert('Sucessfully updated item');
-                //window.location.reload();
+                // Set message onscreen
+                setMessage(`Updated pledge`, "badge-success");
             });
+        } else {
+            setMessage(`Missing required data`, "badge-warning");
         }
     };
+
+    const deletePledge = () => {
+        var r = window.confirm(`Are you sure you want to delete this pledge?`);
+        if (r == true) {
+            // Delete item from db
+            Axios.post("http://localhost:5000/admin/pledge/delPledge",
+            {
+                pledgeId: pledgeID,
+            }, {
+                    headers: {
+                        "x-access-token" : localStorage.getItem('token')
+                    },
+                }).then(() => {
+                // Set message onscreen
+                setMessage(`Deleted resource: ${currentData.resource}`, "badge-danger");
+            });
+            
+            // Hide all data fields on the page upon delete
+            document.getElementById("deleteButton").setAttribute("hidden", "");
+            let rows = document.getElementsByClassName("dataRow");
+            for (var i=0; i<rows.length; i++) {
+                rows[i].setAttribute("hidden", "");
+            }
+
+        }
+    }
 
     const onInputChange = (event) => {
         document.getElementById(event.target.id).value=event.target.value;
@@ -88,15 +114,19 @@ function EditPledgeForm() {
 
     return (
         <div className="PledgeForm">
-            <div className="pl-lg-4">
+            <div className="px-lg-4">
                 <Row>
-                    <Col md="8">
+                    <Col>
                         <FormGroup>
                             <Label
                                 className="form-control-label"
                                 htmlFor="input-resource"
                             ><i className="ni ni-basket pr-2" />Edit Pledge ID#{pledgeID}</Label>
-                            <Row>
+                            <h1 id="msgGroup" hidden>
+                                <Button onClick={closeMsg} close />
+                                <Badge id="messageBadge" color="primary">Message Area</Badge>
+                            </h1>
+                            <Row className="dataRow">
                                 <Label>Resource: </Label>
                                 <Input
                                     className="form-control-alternative"
@@ -118,20 +148,7 @@ function EditPledgeForm() {
                                   })}
                                 </Input>
                             </Row>
-                            <Row>
-                                <Label>Pledge Expiration Date: </Label>
-                                <Input
-                                    type="date"
-                                    id="expiration"
-                                    defaultValue={date}
-                                    onChange={(e) => {
-                                        onInputChange(e);
-                                        setExpiration(e.target.value);
-                                    }}
-                                />
-                                
-                            </Row>
-                            <Row>
+                            <Row className="dataRow">
                                 <Label>Quantity: </Label>
                                 <InputGroup>
                                 <Input
@@ -149,15 +166,15 @@ function EditPledgeForm() {
                         </FormGroup>
                     </Col>
                 </Row>
-                <Row>
-                    <Col md="8">
+                <Row className="dataRow">
+                    <Col>
                         <FormGroup>
-                            <label
+                            <Label
                                 className="form-control-label"
                                 htmlFor="input-donor"
                             ><i className="ni ni-circle-08 pr-2" />
                                 Donor Information
-                            </label>
+                            </Label>
                             <ListGroupItem
                                 className="form-control-alternative"
                                 id="input-donor"
@@ -167,11 +184,12 @@ function EditPledgeForm() {
                         </FormGroup>
                     </Col>
                 </Row>
-                <Row>
-                    <Col md="8">
+                <Row className="dataRow">
+                    <Col>
                         <div className="text-center">
                             <FormGroup>
-                                <button className="btn btn-primary" onClick={updateItem}>Update Pledge</button>
+                                <Button id="updateButton" color="primary" onClick={updatePledge}>Update Pledge</Button>
+                                <Button id="deleteButton" onClick={deletePledge} color="danger">Delete Pledge</Button>
                             </FormGroup>
                         </div>
                     </Col>

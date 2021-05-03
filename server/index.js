@@ -82,7 +82,8 @@ const login = (req, res) => {
             expiresIn: 60 * 3,
           });
           req.session.user = result;
-          console.log(req.session.user);
+          //console.log(req.session.user[0]);
+          console.log(`Logged in user ID#: ${req.session.user[0].id}`);
           res.json({ auth: true, token: token, result: result });
         } else {
           res.json({

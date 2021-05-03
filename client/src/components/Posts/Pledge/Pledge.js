@@ -18,7 +18,13 @@ function Pledge() {
     } 
 
     useEffect(() => {
-      Axios.get(`http://localhost:5000/admin/pledge/?userId=${userData.id}`, {
+        var httpAddr;
+        if (userData.role == "Admin") {
+            httpAddr = `http://localhost:5000/admin/pledge/getAllPledge`;
+        } else {
+            httpAddr = `http://localhost:5000/admin/pledge/?userId=${userData.id}`;
+        }
+      Axios.get(httpAddr, {
           headers: {
               "x-access-token" : localStorage.getItem('token')
           },
@@ -41,26 +47,24 @@ function Pledge() {
                   <div className="col">
                       <Card className="shadow">
                           <CardHeader className="border-0">
-                              <h3 className="mb-0">My Pledges</h3>
+                                <h3 className="mb-0">Pledges</h3>
                           </CardHeader>
                           <Table className="align-items-center table-flush" responsive>
                               <thead className="thead-light">
                               <tr>
                                   <th scope="col">Resource</th>
                                   <th scope="col">Quantity</th>
-                                  <th scope="col">Expiration</th>
                                   <th scope="col"></th>
                               </tr>
                               </thead>
                               <tbody>
                                   {resourceList.map((val) => {
                                     if (val.isValid) {
-                                        console.log(val);
+                                        // console.log(val);
                                         return (
                                             <tr>
                                                 <td>{val.resource}</td>
                                                 <td>{val.quantity} {val.unit}</td>
-                                                <td>{val.expiration.split("T")[0]}</td>
                                                 <td>
                                                     <FormGroup>
                                                         <button id={val.id} className="btn btn-primary" onClick={(e) => {editPledge(e.target.id)}}>Edit</button>

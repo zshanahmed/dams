@@ -2,7 +2,7 @@ import connection from '../index.js';
 
 // get all pledges for a user
 export const getUserPledges = (req, res) => {
-  console.log(req.query.userId);
+  //console.log(req.query.userId);
   const userId = req.query.userId;
   const sqlInsert = "SELECT (userID, resourceID, quantity, expiration) FROM pledge WHERE userID=(?);"
   connection.query(sqlInsert, [userId], (err, result) => {

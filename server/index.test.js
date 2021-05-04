@@ -1,8 +1,26 @@
-process.env.NODE_ENV = "test";
-import connection from '../index.js';
-//const request = require("supertest");
-//const app = require("../app");
-import { getResource, getAllResources, insertPledge, getRequests, getPledgeById, updatePledge, insertResource, updateResource, getAllItems, deleteResource, deletePledge, getRequestById, insertResponse, updateRequestFulfill, getAllPledge, getPledgeByResourceID, matchUpdatePledge } from '../controllers/resources.js';
+//process.env.NODE_ENV = "test";
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "DAMS",
+});
+
+// Add new pledge to db
+const insertPledge = (req, res) => {
+  const resourceId = req.body.resourceId;
+  const quantity = req.body.quantity;
+  const userId = req.body.userId;
+  const sqlInsert = "INSERT into pledge (userID, resourceID, quantity) VALUES (?,?,?)"
+  connection.query(sqlInsert, [userId, resourceId, quantity], (err, result) => {
+      if (err) { 
+        console.log(err);
+      } else {
+        res.status(200).send();
+      }
+  })
+}
 
 beforeAll(async () => {
   await connection.query("CREATE TABLE `disaster_resource` (`id` int NOT NULL AUTO_INCREMENT, `disasterID` int DEFAULT NULL, `resourceID` int DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");

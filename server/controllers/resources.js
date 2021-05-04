@@ -1,10 +1,33 @@
 import connection from '../index.js';
 
-// Get all resources/items (valid and unvalid)
 export const getAllResources = (req, res) => {
   const sqlSelect = "SELECT * from resources;"
   connection.query(sqlSelect, (err, result) => {
     res.json({result: result, auth: true})
+  })
+}
+
+export const getResourceByDisaster = (req, res) => {
+  const id = req.query.id
+  const sqlGet = "SELECT * from resources as rs INNER JOIN disaster_resource as ds ON ds.resourceID = rs.id WHERE rs.id=ds.resourceID and disasterID=(?) and rs.isValid=1;"
+  connection.query(sqlGet,[id], (err,result) => {
+    res.json({result: result, auth: true, id: id});
+  })
+}
+
+export const createRequest = (req, res) => {
+  const requestorID = req.body.requestorID
+  const donorID = req.body.donorID
+  const resourceId = req.body.resourceId
+  const disasterID = req.body.disasterID
+  const quantity = req.body.quantity
+  const sqlCreate = "INSERT into requests (requestorID, donorID, disasterID, resourceID, quantity) values (?,?,?,?,?);"
+  connection.query(sqlCreate, [requestorID, donorID, disasterID, resourceId, quantity], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send();
+    }
   })
 }
 
@@ -69,8 +92,8 @@ export const updateResource = (req, res) => {
   const resourceId = req.body.resourceId;
   const sqlInsert = "UPDATE resources SET unit = ?, resource = ? WHERE id = ?;";
   connection.query(sqlInsert, [unit, resource, resourceId], (err, result) => {
-    if (err) { 
-      console.log(err); 
+    if (err) {
+      console.log(err);
     } else {
      res.status(200).send();
    }
@@ -82,8 +105,8 @@ export const deleteResource = (req, res) => {
   const resourceId = req.body.resourceId;
   const sqlInsert = "UPDATE resources SET isValid=0 WHERE resources.id = ?;";
   connection.query(sqlInsert, [resourceId], (err, result) => {
-    if (err) { 
-      console.log(err); 
+    if (err) {
+      console.log(err);
     } else {
      res.status(200).send();
    }
@@ -109,7 +132,7 @@ export const getRequests = (req, res) => {
   INNER JOIN disasters ON requests.disasterID=disasters.id
   WHERE donorID IS NULL;`;
   connection.query(sqlInsert, (err, result) => {
-      if (err) { 
+      if (err) {
         console.log(err);
       } else {
         //console.log(result);
@@ -126,7 +149,7 @@ export const getRequestById = (req, res) => {
   INNER JOIN disasters ON requests.disasterID=disasters.id
   WHERE requests.id=?;`;
   connection.query(sqlInsert, [requestId], (err, result) => {
-      if (err) { 
+      if (err) {
         console.log(err);
       } else {
         res.json({result: result, auth: true});
@@ -140,8 +163,8 @@ export const updateRequestFulfill = (req, res) => {
   // console.log(requestId, quantity);
   const sqlInsert = "UPDATE requests SET quantity = ? WHERE requests.id = ?;";
   connection.query(sqlInsert, [quantity, requestId], (err, result) => {
-    if (err) { 
-      console.log(err); 
+    if (err) {
+      console.log(err);
     } else {
      res.status(200).send();
    }
@@ -172,7 +195,7 @@ export const insertResponse = (req, res) => {
   const isValid = req.body.isValid;
   const sqlInsert = "INSERT into pledge (userID, resourceID, requestID, quantity, isValid) VALUES (?,?,?,?,?)"
   connection.query(sqlInsert, [userId, resourceId, requestId, quantity, isValid], (err, result) => {
-      if (err) { 
+      if (err) {
         console.log(err);
       } else {
         res.status(200).send();
@@ -188,7 +211,7 @@ export const matchUpdatePledge = (req, res) => {
   const isValid = req.body.isValid;
   const sqlInsert = "UPDATE pledge SET quantity = ?, requestID = ?, isValid = ? WHERE id = ?;"
   connection.query(sqlInsert, [quantity, requestId, isValid, pledgeId], (err, result) => {
-      if (err) { 
+      if (err) {
         console.log(err);
       } else {
         res.status(200).send();
@@ -201,8 +224,9 @@ export const updatePledge = (req, res) => {
   const resourceId = req.body.resourceId;
   const quantity = req.body.quantity;
   const id = req.body.id;
-  const sqlInsert = "UPDATE pledge SET resourceID = ?, quantity = ? WHERE pledge.id = ?";
-  connection.query(sqlInsert, [resourceId, quantity, id], (err, result) => {
+  const expiration = req.body.expiration;
+  const sqlInsert = "UPDATE pledge SET resourceID = ?, quantity = ?, expiration = ? WHERE (id = '?')";
+  connection.query(sqlInsert, [resourceId, quantity, expiration, id], (err, result) => {
       if (err) { 
         console.log(err);
       } else {
@@ -216,8 +240,8 @@ export const deletePledge = (req, res) => {
   const pledgeId = req.body.pledgeId;
   const sqlInsert = "UPDATE pledge SET isValid=0 WHERE pledge.id = ?;";
   connection.query(sqlInsert, [pledgeId], (err, result) => {
-    if (err) { 
-      console.log(err); 
+    if (err) {
+      console.log(err);
     } else {
      res.status(200).send();
    }

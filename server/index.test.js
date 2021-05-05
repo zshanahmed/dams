@@ -1,5 +1,12 @@
 var supertest = require('supertest'); //require supertest
 const request = supertest('http://localhost:5000/'); //supertest hits the HTTP server (your app)
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "DAMS",
+});
 
 beforeAll(async () => {
   await connection.query("CREATE TABLE `disaster_resource` (`id` int NOT NULL AUTO_INCREMENT, `disasterID` int DEFAULT NULL, `resourceID` int DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
